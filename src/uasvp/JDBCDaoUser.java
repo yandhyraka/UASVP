@@ -6,6 +6,7 @@
 package uasvp;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -55,5 +56,27 @@ public class JDBCDaoUser {
             }
         }
         return result;
+    }
+
+    public boolean insertUser(DataUser user) {
+        int berhasil = 0;
+        String query = "insert into user (username, password, nama) values (?,?,?)";
+        PreparedStatement pstmt = null;
+
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getPassword());
+            pstmt.setString(3, user.getNama());
+            berhasil = pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCDaoUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (berhasil > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

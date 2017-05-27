@@ -28,7 +28,7 @@ public class ConnectionManager {
     private ConnectionManager() {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookworm", "root", "");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mebudget", "root", "");
         } catch (InstantiationException ex) {
             Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {

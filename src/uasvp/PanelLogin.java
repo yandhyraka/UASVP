@@ -21,17 +21,22 @@ import javax.swing.JTextField;
  * @author User
  */
 public class PanelLogin extends JPanel implements ActionListener {
-
+    
     private JLabel title;
     private JTextField username, password;
     private JButton register, login;
+    private ListenerLogin listener;
 
+    public void addLoginListener(ListenerLogin listener) {
+        this.listener = listener;
+    }
+    
     public PanelLogin() {
         initComp();
         buildGui();
         registerListener();
     }
-
+    
     public void initComp() {
         title = new JLabel("Login");
         title.setFont(new Font("Arial", Font.BOLD, 28));
@@ -40,7 +45,7 @@ public class PanelLogin extends JPanel implements ActionListener {
         register = new JButton("Register");
         login = new JButton("Login");
     }
-
+    
     public void buildGui() {
         this.setPreferredSize(new Dimension(300, 200));
         String column = "20dlu, pref, 10dlu, 15dlu, 10dlu, 50dlu, 10dlu";
@@ -48,7 +53,7 @@ public class PanelLogin extends JPanel implements ActionListener {
         FormLayout layout = new FormLayout(column, row);
         this.setLayout(layout);
         CellConstraints c = new CellConstraints();
-
+        
         this.add(title, c.xyw(4, 2, 4));
         this.add(new JLabel("Username"), c.xy(2, 4));
         this.add(username, c.xyw(4, 4, 4));
@@ -57,14 +62,24 @@ public class PanelLogin extends JPanel implements ActionListener {
         this.add(register, c.xyw(2, 8, 3));
         this.add(login, c.xyw(6, 8, 2));
     }
-
+    
     public void registerListener() {
         register.addActionListener(this);
         login.addActionListener(this);
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource().equals(register)) {
+            listener.register();
+        }
+        if (e.getSource().equals(login)) {
+            DataUser du = listener.attemptLogin(username.getText(), password.getText());
+            if (du != null) {
+                listener.loginSucceed(du);
+            } else {
+                System.out.println("FAIL");
+            }
+        }
     }
 }

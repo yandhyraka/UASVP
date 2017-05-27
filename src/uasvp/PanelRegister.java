@@ -25,6 +25,11 @@ public class PanelRegister extends JPanel implements ActionListener {
     private JLabel title;
     private JTextField fullname, username, password;
     private JButton register;
+    private ListenerRegister listener;
+
+    public void addListenerRegister(ListenerRegister listener) {
+        this.listener = listener;
+    }
 
     public PanelRegister() {
         initComp();
@@ -65,6 +70,16 @@ public class PanelRegister extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource().equals(register)) {
+            if (listener.checkUsername(username.getText())) {
+                DataUser du=new DataUser();
+                du.setNama(fullname.getText());
+                du.setUsername(username.getText());
+                du.setPassword(password.getText());
+                listener.registerSucceed(du);
+            }else{
+                System.out.println("FAIL");
+            }
+        }
     }
 }

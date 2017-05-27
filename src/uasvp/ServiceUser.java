@@ -18,9 +18,9 @@ public class ServiceUser {
         return dao.readAllUsers();
     }
 
-//    public boolean addNewUser(User user) {
-//        return dao.insertUser(user);
-//    }
+    public boolean addNewUser(DataUser user) {
+        return dao.insertUser(user);
+    }
 //    
 //    public User getUserbyEmail(String email){
 //        return dao.readByEmail(email);
