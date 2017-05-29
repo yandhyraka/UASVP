@@ -23,6 +23,11 @@ public class PanelMainIncome extends JPanel implements ActionListener {
 
     private JLabel title, balance;
     private JButton add, edit, delete;
+    private ListenerMainIncome listener;
+
+    public void addListenerMainIncome(ListenerMainIncome listener) {
+        this.listener = listener;
+    }
 
     public PanelMainIncome() {
         initComp();
@@ -64,6 +69,14 @@ public class PanelMainIncome extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource().equals(add)) {
+            listener.addIncome();
+        }
+        if (e.getSource().equals(edit)) {
+            listener.editIncome();
+        }
+        if (e.getSource().equals(delete)) {
+            listener.deleteIncome();
+        }
     }
 }

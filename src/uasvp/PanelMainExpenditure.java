@@ -23,6 +23,11 @@ public class PanelMainExpenditure extends JPanel implements ActionListener {
 
     private JLabel title, balance;
     private JButton add, edit, delete;
+    private ListenerMainExpenditure listener;
+
+    public void addListenerMainExpenditure(ListenerMainExpenditure listener) {
+        this.listener = listener;
+    }
 
     public PanelMainExpenditure() {
         initComp();
@@ -35,7 +40,7 @@ public class PanelMainExpenditure extends JPanel implements ActionListener {
         title.setFont(new Font("Arial", Font.BOLD, 16));
         balance = new JLabel("Rp 000.000.000");
         balance.setFont(new Font("Arial", Font.BOLD, 28));
-        add = new JButton("Add Income");
+        add = new JButton("Add Expenditure");
         edit = new JButton("Edit");
         delete = new JButton("Delete");
     }
@@ -64,6 +69,14 @@ public class PanelMainExpenditure extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource().equals(add)) {
+            listener.addExpenditure();
+        }
+        if (e.getSource().equals(edit)) {
+            listener.editExpenditure();
+        }
+        if (e.getSource().equals(delete)) {
+            listener.deleteExpenditure();
+        }
     }
 }

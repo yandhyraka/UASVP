@@ -24,6 +24,11 @@ public class PanelMainMenu extends JPanel implements ActionListener {
 
     private JLabel title, balance;
     private JButton income, expenditure, debt, budget, history;
+    private ListenerMainMenu listener;
+
+    public void addListenerMainMenu(ListenerMainMenu listener) {
+        this.listener = listener;
+    }
 
     public PanelMainMenu() {
         initComp();
@@ -71,6 +76,25 @@ public class PanelMainMenu extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource().equals(expenditure)) {
+            listener.expenditure();
+        }
+        
+        if (e.getSource().equals(income)) {
+            listener.income();
+        }
+        
+        if (e.getSource().equals(debt)) {
+            listener.debt();
+        }
+        
+        if (e.getSource().equals(budget)) {
+            listener.budget();
+        }
+        
+        if (e.getSource().equals(history)) {
+            listener.transactionHistory();
+        }
 
     }
 }

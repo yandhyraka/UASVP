@@ -25,6 +25,11 @@ public class PanelMainDebt extends JPanel implements ActionListener {
     private JLabel title;
     private JTable tabel;
     private JButton newButton, editButton;
+    private ListenerMainDebt listener;
+
+    public void addListenerMainDebt(ListenerMainDebt listener) {
+        this.listener = listener;
+    }
 
     public PanelMainDebt() {
         initComp();
@@ -62,6 +67,11 @@ public class PanelMainDebt extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource().equals(newButton)) {
+            listener.addDebt();
+        }
+        if (e.getSource().equals(editButton)) {
+            listener.editDebt();
+        }
     }
 }
