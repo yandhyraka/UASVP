@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 27, 2017 at 10:33 AM
+-- Generation Time: Jun 01, 2017 at 12:19 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -58,8 +58,16 @@ CREATE TABLE `hutang` (
 
 CREATE TABLE `kategori` (
   `id` int(3) NOT NULL,
-  `nama` varchar(10) NOT NULL
+  `nama` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kategori`
+--
+
+INSERT INTO `kategori` (`id`, `nama`) VALUES
+(1, 'Makanan'),
+(2, 'Transportasi');
 
 -- --------------------------------------------------------
 
@@ -75,6 +83,13 @@ CREATE TABLE `pemasukan` (
   `username` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `pemasukan`
+--
+
+INSERT INTO `pemasukan` (`id`, `jumlah`, `keterangan`, `tanggal`, `username`) VALUES
+(1, 123, 'aaa', '2017-06-01', 'admin');
+
 -- --------------------------------------------------------
 
 --
@@ -89,6 +104,13 @@ CREATE TABLE `pengeluaran` (
   `username` varchar(15) NOT NULL,
   `id_kategori` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pengeluaran`
+--
+
+INSERT INTO `pengeluaran` (`id`, `jumlah`, `keterangan`, `tanggal`, `username`, `id_kategori`) VALUES
+(1, 12345, 'aaa', '2017-06-01', 'admin', 2);
 
 -- --------------------------------------------------------
 
@@ -156,6 +178,30 @@ ALTER TABLE `pengeluaran`
 ALTER TABLE `user`
   ADD PRIMARY KEY (`username`);
 
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `budget`
+--
+ALTER TABLE `budget`
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `hutang`
+--
+ALTER TABLE `hutang`
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `pemasukan`
+--
+ALTER TABLE `pemasukan`
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `pengeluaran`
+--
+ALTER TABLE `pengeluaran`
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Constraints for dumped tables
 --

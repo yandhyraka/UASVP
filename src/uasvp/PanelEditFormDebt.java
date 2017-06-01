@@ -78,6 +78,8 @@ public class PanelEditFormDebt extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource().equals(save)) {
+            System.out.println(calendar.getCalendar().getTime());
+        }
     }
 }

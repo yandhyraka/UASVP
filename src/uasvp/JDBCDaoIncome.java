@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,5 +56,28 @@ public class JDBCDaoIncome {
             }
         }
         return result;
+    }
+    
+    public boolean insertIncome(DataUser user, DataIncome income) {
+        int berhasil = 0;
+        String query = "insert into pemasukan (jumlah, keterangan, tanggal, username) values (?,?,?,?)";
+        PreparedStatement pstmt = null;
+
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, income.getJumlah());
+            pstmt.setString(2, income.getKeterangan());
+            pstmt.setDate(3, new java.sql.Date(income.getTanggal().getTime()));
+            pstmt.setString(4, user.getNama());
+            berhasil = pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCDaoUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (berhasil > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

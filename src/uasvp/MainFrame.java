@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  *
  * @author User
  */
-public class MainFrame extends JFrame implements ActionListener, ListenerLogin, ListenerRegister, ListenerMainMenu, ListenerMainIncome, ListenerMainExpenditure, ListenerMainBudget, ListenerMainDebt {
+public class MainFrame extends JFrame implements ActionListener, ListenerLogin, ListenerRegister, ListenerMainMenu, ListenerMainIncome, ListenerMainExpenditure, ListenerMainBudget, ListenerMainDebt, ListenerIncome, ListenerExpenditure {
 
     private JMenuBar registerMB, homeMB, defaultMB;
     private JMenuItem back, backReg, mainMenu, logout, logoutHome;
@@ -32,11 +32,11 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
         this.setSize(new Dimension(400, 300));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("ME Budget");
-        this.setContentPane(new PanelEditFormDebt());
-//        this.setJMenuBar(new JMenuBar());
-//        PanelLogin pl = new PanelLogin();
-//        this.setContentPane(pl);
-//        pl.addLoginListener(this);
+//        this.setContentPane(new PanelAddExpenditure());
+        this.setJMenuBar(new JMenuBar());
+        PanelLogin pl = new PanelLogin();
+        this.setContentPane(pl);
+        pl.addLoginListener(this);
         this.pack();
         this.setVisible(true);
     }
@@ -190,6 +190,7 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
     @Override
     public void addIncome() {
         PanelAddIncome pai = new PanelAddIncome();
+        pai.addListenerIncome(this);
         changePanel(pai);
     }
 
@@ -210,6 +211,7 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
     @Override
     public void addExpenditure() {
         PanelAddExpenditure pae = new PanelAddExpenditure();
+        pae.addListenerExpenditure(this);
         changePanel(pae);
     }
 
@@ -259,4 +261,60 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
         changePanel(pefd);
     }
     //END LISTENER MAIN DEBT
+
+    //START LISTENER INCOME
+    @Override
+    public void cancelIncome() {
+        PanelMainIncome pmi=new PanelMainIncome();
+        pmi.addListenerMainIncome(this);
+        changePanel(pmi);
+    }
+
+    @Override
+    public void addIncome(DataIncome di) {
+        ModelIncome mi=new ModelIncome();
+        mi.InputIncome(currentUser, di);
+        PanelMainIncome pmi=new PanelMainIncome();
+        pmi.addListenerMainIncome(this);
+        changePanel(pmi);
+    }
+
+    @Override
+    public void editIncome(DataIncome di) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deleteIncome(DataIncome di) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    //END LISTENER INCOME
+
+    //START LISTENER EXPENDITURE
+    @Override
+    public void cancelExpenditure() {
+        PanelMainExpenditure pme=new PanelMainExpenditure();
+        pme.addListenerMainExpenditure(this);
+        changePanel(pme);
+    }
+
+    @Override
+    public void addExpenditure(DataExpenditure de) {
+        ModelExpenditure me=new ModelExpenditure();
+        me.InputExpenditure(currentUser, de);
+        PanelMainExpenditure pme=new PanelMainExpenditure();
+        pme.addListenerMainExpenditure(this);
+        changePanel(pme);
+    }
+
+    @Override
+    public void editExpenditure(DataExpenditure de) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deleteExpenditure(DataExpenditure de) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    //END LISTENER EXPENDITURE
 }

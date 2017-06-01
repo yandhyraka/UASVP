@@ -56,6 +56,28 @@ public class JDBCDaoExpenditure {
             }
         }
         return result;
+    }
+    public boolean insertExpenditure(DataUser user, DataExpenditure expend) {
+        int berhasil = 0;
+        String query = "insert into pengeluaran (jumlah, keterangan, tanggal, username, id_kategori) values (?,?,?,?,?)";
+        PreparedStatement pstmt = null;
 
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, expend.getJumlah());
+            pstmt.setString(2, expend.getKeterangan());
+            pstmt.setDate(3, new java.sql.Date(expend.getTanggal().getTime()));
+            pstmt.setString(4, user.getNama());
+            pstmt.setInt(5, expend.getIdKategori());
+            berhasil = pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCDaoUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (berhasil > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

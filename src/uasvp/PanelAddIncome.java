@@ -27,6 +27,11 @@ public class PanelAddIncome extends JPanel implements ActionListener {
     private JTextField desc, amount;
     private JButton cancel, save;
     private JCalendar calendar;
+    private ListenerIncome listener;
+
+    public void addListenerIncome(ListenerIncome listener) {
+        this.listener = listener;
+    }
 
     public PanelAddIncome() {
         initComp();
@@ -41,7 +46,7 @@ public class PanelAddIncome extends JPanel implements ActionListener {
         amount = new JTextField(25);
         cancel = new JButton("Cancel");
         save = new JButton("Save");
-        calendar=new JCalendar();
+        calendar = new JCalendar();
     }
 
     public void buildGui() {
@@ -70,6 +75,16 @@ public class PanelAddIncome extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource().equals(save)) {
+            DataIncome di = new DataIncome();
+            di.setTanggal(calendar.getDate());
+            di.setKeterangan(desc.getText());
+            di.setJumlah(Integer.parseInt(amount.getText()));
+            listener.addIncome(di);
+        }
+        
+        if (e.getSource().equals(cancel)) {
+            listener.cancelIncome();
+        }
     }
 }

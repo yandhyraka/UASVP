@@ -29,6 +29,11 @@ public class PanelAddExpenditure extends JPanel implements ActionListener {
     private JButton cancel, save;
     private JComboBox category;
     private JCalendar calendar;
+    private ListenerExpenditure listener;
+
+    public void addListenerExpenditure(ListenerExpenditure listener) {
+        this.listener = listener;
+    }
 
     public PanelAddExpenditure() {
         initComp();
@@ -43,7 +48,8 @@ public class PanelAddExpenditure extends JPanel implements ActionListener {
         amount = new JTextField(25);
         cancel = new JButton("Cancel");
         save = new JButton("Save");
-        category = new JComboBox();
+        ModelCategory mc = new ModelCategory();
+        category = new JComboBox(mc.getCategory());
         calendar = new JCalendar();
     }
 
@@ -75,6 +81,17 @@ public class PanelAddExpenditure extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource().equals(save)) {
+            DataExpenditure de = new DataExpenditure();
+            de.setTanggal(calendar.getDate());
+            de.setKeterangan(desc.getText());
+            de.setJumlah(Integer.parseInt(amount.getText()));
+            de.setIdKategori(category.getSelectedIndex()+1);
+            listener.addExpenditure(de);
+        }
 
+        if (e.getSource().equals(cancel)) {
+            listener.cancelExpenditure();
+        }
     }
 }

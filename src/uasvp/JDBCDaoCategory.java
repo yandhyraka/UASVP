@@ -25,7 +25,7 @@ public class JDBCDaoCategory {
         conn = ConnectionManager.getInstance().getConnection();
     }
 
-    public Vector<DataCategory> readAllUsers() {
+    public Vector<DataCategory> readAllCategory() {
         Vector<DataCategory> result = null;
         String query = "select * from kategori";
         Statement stmt = null;
