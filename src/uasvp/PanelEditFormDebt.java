@@ -7,6 +7,7 @@ package uasvp;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
+import com.toedter.calendar.JCalendar;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -24,9 +25,10 @@ import javax.swing.JTextField;
 public class PanelEditFormDebt extends JPanel implements ActionListener {
 
     private JLabel title;
-    private JTextField day, month, year, amount;
-    private JButton today, cancel, save;
+    private JTextField amount;
+    private JButton cancel, save;
     private JComboBox from, to, status;
+    private JCalendar calendar;
 
     public PanelEditFormDebt() {
         initComp();
@@ -37,46 +39,39 @@ public class PanelEditFormDebt extends JPanel implements ActionListener {
     public void initComp() {
         title = new JLabel("Edit Debt");
         title.setFont(new Font("Arial", Font.BOLD, 28));
-        day = new JTextField(2);
-        month = new JTextField(2);
-        year = new JTextField(4);
         amount = new JTextField(25);
-        today = new JButton("Today");
         cancel = new JButton("Cancel");
         save = new JButton("Save");
-        from=new JComboBox();
-        to=new JComboBox();
-        status=new JComboBox();
+        from = new JComboBox();
+        to = new JComboBox();
+        status = new JComboBox();
+        calendar = new JCalendar();
     }
 
     public void buildGui() {
-        this.setPreferredSize(new Dimension(325, 290));
-        String column = "20dlu, pref, 10dlu, 10dlu, 5dlu, 10dlu, 5dlu, 10dlu, 10dlu, 5dlu, 42dlu, 10dlu";
-        String row = "15dlu, pref, 15dlu, pref, 10dlu, pref, 10dlu, pref, 10dlu, pref, 10dlu, pref, 10dlu";
+        this.setPreferredSize(new Dimension(390, 430));
+        String column = "20dlu, 45dlu, 5dlu, 50dlu, 5dlu, 25dlu, 45dlu, 5dlu";
+        String row = "15dlu, pref, 15dlu, pref, 1dlu, pref, 10dlu, pref, 10dlu, pref, 20dlu, pref, 10dlu";
         FormLayout layout = new FormLayout(column, row);
         this.setLayout(layout);
         CellConstraints c = new CellConstraints();
 
-        this.add(title, c.xyw(2, 2, 10, "center, center"));
-        this.add(new JLabel("Date"), c.xy(2, 4));
-        this.add(day, c.xy(4, 4));
-        this.add(month, c.xy(6, 4));
-        this.add(year, c.xyw(8, 4, 2));
-        this.add(today, c.xy(11, 4));
+        this.add(title, c.xyw(2, 2, 7, "center, center"));
+        this.add(new JLabel("Date"), c.xyw(2, 4, 1, "left, top"));
+        this.add(calendar, c.xyw(4, 4, 5));
         this.add(new JLabel("From"), c.xy(2, 6));
-        this.add(from, c.xyw(4, 6, 4));
-        this.add(new JLabel("To"), c.xy(9, 6));
-        this.add(to, c.xy(11, 6));
+        this.add(from, c.xy(4, 6));
+        this.add(new JLabel("To"), c.xy(6, 6));
+        this.add(to, c.xyw(7, 6, 2));
         this.add(new JLabel("Amount"), c.xy(2, 8));
-        this.add(amount, c.xyw(4, 8, 8));
+        this.add(amount, c.xyw(4, 8, 5));
         this.add(new JLabel("Status"), c.xy(2, 10));
-        this.add(status, c.xyw(4, 10, 8));
-        this.add(cancel, c.xyw(2, 12, 3));
-        this.add(save, c.xyw(9, 12, 3));
+        this.add(status, c.xyw(4, 10, 5));
+        this.add(cancel, c.xyw(2, 12, 2));
+        this.add(save, c.xyw(7, 12, 2));
     }
 
     public void registerListener() {
-        today.addActionListener(this);
         cancel.addActionListener(this);
         save.addActionListener(this);
     }

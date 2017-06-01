@@ -32,10 +32,11 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
         this.setSize(new Dimension(400, 300));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("ME Budget");
-        this.setJMenuBar(new JMenuBar());
-        PanelLogin pl = new PanelLogin();
-        this.setContentPane(pl);
-        pl.addLoginListener(this);
+        this.setContentPane(new PanelEditFormDebt());
+//        this.setJMenuBar(new JMenuBar());
+//        PanelLogin pl = new PanelLogin();
+//        this.setContentPane(pl);
+//        pl.addLoginListener(this);
         this.pack();
         this.setVisible(true);
     }
