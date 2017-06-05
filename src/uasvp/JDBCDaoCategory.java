@@ -6,6 +6,7 @@
 package uasvp;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -47,6 +48,35 @@ public class JDBCDaoCategory {
                 try {
                     rs.close();
                     stmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(JDBCDaoCategory.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return result;
+    }
+    
+    public DataCategory readCategoryById(int id) {
+        DataCategory result = null;
+        String query = "select * from kategori where id = ?";
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, id);
+            rs = pstmt.executeQuery();
+            result = new DataCategory();
+            while (rs.next()) {
+                result.setNama(rs.getString("nama"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCDaoCategory.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                    pstmt.close();
                 } catch (SQLException ex) {
                     Logger.getLogger(JDBCDaoCategory.class.getName()).log(Level.SEVERE, null, ex);
                 }

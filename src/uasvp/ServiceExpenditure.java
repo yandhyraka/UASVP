@@ -14,8 +14,8 @@ import java.util.Vector;
 public class ServiceExpenditure {
     private JDBCDaoExpenditure dao=new JDBCDaoExpenditure();
     
-    public Vector<DataExpenditure> getExpenditure(String username) {
-        return dao.readByUserId(username);
+    public Vector<DataExpenditure> getExpenditure(DataUser user) {
+        return dao.readByUser(user);
     }
 
     public boolean addNewExpenditure(DataUser user, DataExpenditure expend) {

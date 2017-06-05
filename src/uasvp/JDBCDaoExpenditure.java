@@ -25,14 +25,14 @@ public class JDBCDaoExpenditure {
         conn = ConnectionManager.getInstance().getConnection();
     }
 
-    public Vector<DataExpenditure> readByUserId(String username) {
+    public Vector<DataExpenditure> readByUser(DataUser user) {
         Vector<DataExpenditure> result = null;
         String query = "select * from pengeluaran where username = ?";
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, username);
+            pstmt.setString(1, user.getNama());
             rs = pstmt.executeQuery();
             result = new Vector<DataExpenditure>();
             while (rs.next()) {

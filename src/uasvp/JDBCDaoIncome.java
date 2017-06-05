@@ -26,14 +26,14 @@ public class JDBCDaoIncome {
         conn = ConnectionManager.getInstance().getConnection();
     }
 
-    public Vector<DataIncome> readByUserId(String username) {
+    public Vector<DataIncome> readByUser(DataUser user) {
         Vector<DataIncome> result = null;
         String query = "select * from pemasukan where username = ?";
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, username);
+            pstmt.setString(1, user.getNama());
             rs = pstmt.executeQuery();
             result = new Vector<DataIncome>();
             while (rs.next()) {

@@ -14,8 +14,8 @@ import java.util.Vector;
 public class ServiceIncome {
     private JDBCDaoIncome dao=new JDBCDaoIncome();
     
-    public Vector<DataIncome> getIncome(String username) {
-        return dao.readByUserId(username);
+    public Vector<DataIncome> getIncome(DataUser user) {
+        return dao.readByUser(user);
     }
 
     public boolean addNewIncome(DataUser user, DataIncome income) {

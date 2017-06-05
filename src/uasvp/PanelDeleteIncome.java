@@ -14,19 +14,27 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 /**
  *
  * @author User
  */
-public class PanelDeleteIncome extends JPanel implements ActionListener {
+public class PanelDeleteIncome extends JPanel implements TableModelListener, ListSelectionListener, ActionListener {
 
     private JLabel title;
     private JTable tabel;
+    private JScrollPane tablePane;
     private JButton cancel, select;
+    private DataUser currentUser;
 
-    public PanelDeleteIncome() {
+    public PanelDeleteIncome(DataUser currentUser) {
+        this.currentUser = currentUser;
         initComp();
         buildGui();
         registerListener();
@@ -35,8 +43,13 @@ public class PanelDeleteIncome extends JPanel implements ActionListener {
     public void initComp() {
         title = new JLabel("Delete Income");
         title.setFont(new Font("Arial", Font.BOLD, 28));
+        ModelIncome mi = new ModelIncome(currentUser);
         tabel = new JTable();
-        tabel.setPreferredSize(new Dimension(250, 150));
+        tabel.setModel(mi);
+        tabel.setAutoCreateRowSorter(true);
+        tabel.setRowHeight(20);
+        tablePane = new JScrollPane(tabel);
+        tablePane.setPreferredSize(new Dimension(250, 150));
         cancel = new JButton("Cancel");
         select = new JButton("Select");
     }
@@ -50,7 +63,7 @@ public class PanelDeleteIncome extends JPanel implements ActionListener {
         CellConstraints c = new CellConstraints();
 
         this.add(title, c.xyw(2, 2, 3, "center, center"));
-        this.add(tabel, c.xyw(2, 4, 3, "center, center"));
+        this.add(tablePane, c.xyw(2, 4, 3, "center, center"));
         this.add(cancel, c.xy(2, 6));
         this.add(select, c.xy(4, 6));
     }
@@ -63,5 +76,15 @@ public class PanelDeleteIncome extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+    }
+
+    @Override
+    public void tableChanged(TableModelEvent e) {
+        
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        
     }
 }

@@ -17,4 +17,8 @@ public class ServiceCategory {
     public Vector<DataCategory> getCategory(){
         return dao.readAllCategory();
     }
+    
+    public DataCategory getCategoryById(int id){
+        return dao.readCategoryById(id);
+    }
 }

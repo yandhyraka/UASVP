@@ -196,13 +196,13 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
 
     @Override
     public void editIncome() {
-        PanelEditListIncome peli = new PanelEditListIncome();
+        PanelEditListIncome peli = new PanelEditListIncome(currentUser);
         changePanel(peli);
     }
 
     @Override
     public void deleteIncome() {
-        PanelDeleteIncome pdi = new PanelDeleteIncome();
+        PanelDeleteIncome pdi = new PanelDeleteIncome(currentUser);
         changePanel(pdi);
     }
     //END LISTENER MAIN INCOME
@@ -217,13 +217,13 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
 
     @Override
     public void editExpenditure() {
-        PanelEditListExpenditure pele = new PanelEditListExpenditure();
+        PanelEditListExpenditure pele = new PanelEditListExpenditure(currentUser);
         changePanel(pele);
     }
 
     @Override
     public void deleteExpenditure() {
-        PanelDeleteExpenditure pde = new PanelDeleteExpenditure();
+        PanelDeleteExpenditure pde = new PanelDeleteExpenditure(currentUser);
         changePanel(pde);
     }
     //END LISTENER MAIN EXPENDITURE
@@ -272,7 +272,7 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
 
     @Override
     public void addIncome(DataIncome di) {
-        ModelIncome mi=new ModelIncome();
+        ModelIncome mi=new ModelIncome(currentUser);
         mi.InputIncome(currentUser, di);
         PanelMainIncome pmi=new PanelMainIncome();
         pmi.addListenerMainIncome(this);
@@ -300,7 +300,7 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
 
     @Override
     public void addExpenditure(DataExpenditure de) {
-        ModelExpenditure me=new ModelExpenditure();
+        ModelExpenditure me=new ModelExpenditure(currentUser);
         me.InputExpenditure(currentUser, de);
         PanelMainExpenditure pme=new PanelMainExpenditure();
         pme.addListenerMainExpenditure(this);
