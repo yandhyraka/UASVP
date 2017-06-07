@@ -40,8 +40,20 @@ public class ModelExpenditure extends AbstractTableModel {
         return se.getExpenditure(user);
     }
 
-    public boolean InputExpenditure(DataUser user, DataExpenditure expend) {
+    public boolean inputExpenditure(DataUser user, DataExpenditure expend) {
         return se.addNewExpenditure(user, expend);
+    }
+
+    public boolean editExpenditure(DataExpenditure expend) {
+        return se.editSelectedExpenditure(expend);
+    }
+
+    public boolean deleteExpenditure(DataExpenditure expend) {
+        return se.deleteSelectedExpenditure(expend);
+    }
+
+    public Object[] getRow(int row) {
+        return rows.get(row);
     }
 
     @Override

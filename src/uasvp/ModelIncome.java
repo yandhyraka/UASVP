@@ -38,8 +38,20 @@ public class ModelIncome extends AbstractTableModel {
         return si.getIncome(user);
     }
 
-    public boolean InputIncome(DataUser user, DataIncome income) {
+    public boolean inputIncome(DataUser user, DataIncome income) {
         return si.addNewIncome(user, income);
+    }
+
+    public boolean editIncome(DataIncome income) {
+        return si.editSelectedIncome(income);
+    }
+
+    public boolean deleteIncome(DataIncome income) {
+        return si.deleteSelectedIncome(income);
+    }
+
+    public Object[] getRow(int row) {
+        return rows.get(row);
     }
 
     @Override

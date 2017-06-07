@@ -37,6 +37,7 @@ public class JDBCDaoBudget {
             result = new Vector<DataBudget>();
             while (rs.next()) {
                 DataBudget db = new DataBudget();
+                db.setId(rs.getInt("id"));
                 db.setJumlah(rs.getInt("jumlah"));
                 db.setSisa(rs.getInt("sisa"));
                 db.setBulan(rs.getString("bulan"));

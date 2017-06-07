@@ -37,6 +37,7 @@ public class JDBCDaoDebt {
             result = new Vector<DataDebt>();
             while (rs.next()) {
                 DataDebt dd = new DataDebt();
+                dd.setId(rs.getInt("id"));
                 dd.setUsernamePenghutang(rs.getString("username2"));
                 dd.setTanggal(new java.util.Date(rs.getDate("tanggal").getTime()));
                 dd.setJumlah(rs.getInt("jumlah"));

@@ -13,9 +13,17 @@ import java.util.Date;
  */
 public class DataExpenditure {
 
-    private int jumlah, idKategori;
+    private int id, jumlah, idKategori;
     private String keterangan;
     private Date tanggal;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getJumlah() {
         return jumlah;

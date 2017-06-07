@@ -14,6 +14,8 @@ public interface ListenerIncome {
     public void cancelIncome();
 
     public void addIncome(DataIncome di);
+    
+    public void selectIncome(Object[] income);
 
     public void editIncome(DataIncome di);
 

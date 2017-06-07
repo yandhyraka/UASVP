@@ -76,7 +76,10 @@ public class PanelEditListIncome extends JPanel implements TableModelListener, L
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource().equals(select)) {
+            ModelIncome mi = (ModelIncome) tabel.getModel();
+            Object[] temp = mi.getRow(tabel.getSelectedRow());
+        }
     }
 
     @Override

@@ -14,6 +14,8 @@ public interface ListenerExpenditure {
     public void cancelExpenditure();
 
     public void addExpenditure(DataExpenditure de);
+    
+    public void selectExpenditure(Object[] expend);
 
     public void editExpenditure(DataExpenditure de);
 

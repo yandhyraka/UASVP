@@ -15,7 +15,15 @@ public class DataDebt {
 
     private String usernamePenghutang;
     private Date tanggal;
-    private int jumlah, status;
+    private int id, jumlah , status;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getUsernamePenghutang() {
         return usernamePenghutang;

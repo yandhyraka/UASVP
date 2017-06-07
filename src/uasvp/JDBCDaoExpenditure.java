@@ -37,6 +37,7 @@ public class JDBCDaoExpenditure {
             result = new Vector<DataExpenditure>();
             while (rs.next()) {
                 DataExpenditure de = new DataExpenditure();
+                de.setId(rs.getInt("id"));
                 de.setJumlah(rs.getInt("jumlah"));
                 de.setKeterangan(rs.getString("keterangan"));
                 de.setTanggal(new java.util.Date(rs.getDate("tanggal").getTime()));
@@ -69,6 +70,50 @@ public class JDBCDaoExpenditure {
             pstmt.setDate(3, new java.sql.Date(expend.getTanggal().getTime()));
             pstmt.setString(4, user.getNama());
             pstmt.setInt(5, expend.getIdKategori());
+            berhasil = pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCDaoUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (berhasil > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public boolean updateExpenditure(DataExpenditure expend) {
+        int berhasil = 0;
+        String query = "update pengeluaran set `jumlah`=?,`keterangan`=?,`tanggal`=?,`id_kategori`=? where ?";
+        PreparedStatement pstmt = null;
+
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, expend.getJumlah());
+            pstmt.setString(2, expend.getKeterangan());
+            pstmt.setDate(3, new java.sql.Date(expend.getTanggal().getTime()));
+            pstmt.setInt(4, expend.getIdKategori());
+            pstmt.setInt(5, expend.getId());
+            berhasil = pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCDaoUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (berhasil > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public boolean deleteExpenditure(DataExpenditure expend) {
+        int berhasil = 0;
+        String query = "delete from pengeluaran where ?";
+        PreparedStatement pstmt = null;
+
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, expend.getId());
             berhasil = pstmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(JDBCDaoUser.class.getName()).log(Level.SEVERE, null, ex);

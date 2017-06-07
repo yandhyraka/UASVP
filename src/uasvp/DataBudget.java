@@ -11,8 +11,16 @@ package uasvp;
  */
 public class DataBudget {
 
-    private int jumlah, sisa, idKategori;
+    private int id, jumlah, sisa, idKategori;
     private String bulan;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getJumlah() {
         return jumlah;

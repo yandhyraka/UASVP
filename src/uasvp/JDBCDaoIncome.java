@@ -38,6 +38,7 @@ public class JDBCDaoIncome {
             result = new Vector<DataIncome>();
             while (rs.next()) {
                 DataIncome di = new DataIncome();
+                di.setId(rs.getInt("id"));
                 di.setJumlah(rs.getInt("jumlah"));
                 di.setKeterangan(rs.getString("keterangan"));
                 di.setTanggal(new java.util.Date(rs.getDate("tanggal").getTime()));
@@ -69,6 +70,49 @@ public class JDBCDaoIncome {
             pstmt.setString(2, income.getKeterangan());
             pstmt.setDate(3, new java.sql.Date(income.getTanggal().getTime()));
             pstmt.setString(4, user.getNama());
+            berhasil = pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCDaoUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (berhasil > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public boolean updateIncome(DataIncome income) {
+        int berhasil = 0;
+        String query = "update pemasukan set `jumlah`=?,`keterangan`=?,`tanggal`=? where ?";
+        PreparedStatement pstmt = null;
+
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, income.getJumlah());
+            pstmt.setString(2, income.getKeterangan());
+            pstmt.setDate(3, new java.sql.Date(income.getTanggal().getTime()));
+            pstmt.setInt(4, income.getId());
+            berhasil = pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCDaoUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (berhasil > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public boolean deleteIncome(DataIncome income) {
+        int berhasil = 0;
+        String query = "delete from pemasukan where ?";
+        PreparedStatement pstmt = null;
+
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, income.getId());
             berhasil = pstmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(JDBCDaoUser.class.getName()).log(Level.SEVERE, null, ex);

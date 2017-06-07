@@ -13,10 +13,18 @@ import java.util.Date;
  */
 public class DataIncome {
 
-    private int jumlah;
+    private int id, jumlah;
     private String keterangan;
     private Date tanggal;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public int getJumlah() {
         return jumlah;
     }

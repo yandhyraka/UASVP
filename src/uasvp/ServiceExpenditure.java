@@ -21,4 +21,12 @@ public class ServiceExpenditure {
     public boolean addNewExpenditure(DataUser user, DataExpenditure expend) {
         return dao.insertExpenditure(user, expend);
     }
+    
+    public boolean editSelectedExpenditure(DataExpenditure expend) {
+        return dao.updateExpenditure(expend);
+    }
+    
+    public boolean deleteSelectedExpenditure(DataExpenditure expend) {
+        return dao.deleteExpenditure(expend);
+    }
 }

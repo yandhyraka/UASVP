@@ -21,4 +21,12 @@ public class ServiceIncome {
     public boolean addNewIncome(DataUser user, DataIncome income) {
         return dao.insertIncome(user, income);
     }
+    
+    public boolean editSelectedIncome(DataIncome income) {
+        return dao.updateIncome(income);
+    }
+    
+    public boolean deleteSelectedIncome(DataIncome income) {
+        return dao.deleteIncome(income);
+    }
 }

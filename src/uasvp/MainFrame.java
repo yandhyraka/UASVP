@@ -92,7 +92,7 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
         }
 
         if (e.getSource().equals(logout) || e.getSource().equals(logoutHome)) {
-            currentUser=null;
+            currentUser = null;
             PanelLogin pl = new PanelLogin();
             pl.addLoginListener(this);
             changePanel(pl);
@@ -265,18 +265,23 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
     //START LISTENER INCOME
     @Override
     public void cancelIncome() {
-        PanelMainIncome pmi=new PanelMainIncome();
+        PanelMainIncome pmi = new PanelMainIncome();
         pmi.addListenerMainIncome(this);
         changePanel(pmi);
     }
 
     @Override
     public void addIncome(DataIncome di) {
-        ModelIncome mi=new ModelIncome(currentUser);
-        mi.InputIncome(currentUser, di);
-        PanelMainIncome pmi=new PanelMainIncome();
+        ModelIncome mi = new ModelIncome(currentUser);
+        mi.inputIncome(currentUser, di);
+        PanelMainIncome pmi = new PanelMainIncome();
         pmi.addListenerMainIncome(this);
         changePanel(pmi);
+    }
+
+    @Override
+    public void selectIncome(Object[] income) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -293,18 +298,23 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
     //START LISTENER EXPENDITURE
     @Override
     public void cancelExpenditure() {
-        PanelMainExpenditure pme=new PanelMainExpenditure();
+        PanelMainExpenditure pme = new PanelMainExpenditure();
         pme.addListenerMainExpenditure(this);
         changePanel(pme);
     }
 
     @Override
     public void addExpenditure(DataExpenditure de) {
-        ModelExpenditure me=new ModelExpenditure(currentUser);
-        me.InputExpenditure(currentUser, de);
-        PanelMainExpenditure pme=new PanelMainExpenditure();
+        ModelExpenditure me = new ModelExpenditure(currentUser);
+        me.inputExpenditure(currentUser, de);
+        PanelMainExpenditure pme = new PanelMainExpenditure();
         pme.addListenerMainExpenditure(this);
         changePanel(pme);
+    }
+
+    @Override
+    public void selectExpenditure(Object[] expend) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
