@@ -25,11 +25,12 @@ public class ModelIncome extends AbstractTableModel {
         data = si.getIncome(user);
         rows = new Vector<Object[]>();
         for (DataIncome a : data) {
-            Object[] arow = new Object[3];
+            Object[] arow = new Object[4];
             String tanggal = new SimpleDateFormat("yyyy-MM-dd").format(a.getTanggal());
             arow[0] = tanggal;
             arow[1] = a.getKeterangan();
             arow[2] = a.getJumlah();
+            arow[3] = a.getId();
             rows.add(arow);
         }
     }
@@ -46,8 +47,8 @@ public class ModelIncome extends AbstractTableModel {
         return si.editSelectedIncome(income);
     }
 
-    public boolean deleteIncome(DataIncome income) {
-        return si.deleteSelectedIncome(income);
+    public boolean deleteIncome(int id) {
+        return si.deleteSelectedIncome(id);
     }
 
     public Object[] getRow(int row) {

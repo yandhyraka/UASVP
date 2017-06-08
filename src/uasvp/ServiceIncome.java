@@ -26,7 +26,7 @@ public class ServiceIncome {
         return dao.updateIncome(income);
     }
     
-    public boolean deleteSelectedIncome(DataIncome income) {
-        return dao.deleteIncome(income);
+    public boolean deleteSelectedIncome(int id) {
+        return dao.deleteIncome(id);
     }
 }

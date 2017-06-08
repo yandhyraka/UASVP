@@ -21,4 +21,8 @@ public class ModelCategory {
         }
         return kategori;
     }
+    
+    public DataCategory getCategoryById(int id){
+        return sc.getCategoryById(id);
+    }
 }

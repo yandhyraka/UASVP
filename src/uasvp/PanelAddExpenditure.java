@@ -91,7 +91,7 @@ public class PanelAddExpenditure extends JPanel implements ActionListener {
         }
 
         if (e.getSource().equals(cancel)) {
-            listener.cancelExpenditure();
+            listener.cancelExpenditure(this);
         }
     }
 }

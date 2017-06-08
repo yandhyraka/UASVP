@@ -38,6 +38,7 @@ public class JDBCDaoCategory {
             result = new Vector<DataCategory>();
             while (rs.next()) {
                 DataCategory dc = new DataCategory();
+                dc.setId(rs.getInt("id"));
                 dc.setNama(rs.getString("nama"));
                 result.add(dc);
             }
@@ -55,7 +56,7 @@ public class JDBCDaoCategory {
         }
         return result;
     }
-    
+
     public DataCategory readCategoryById(int id) {
         DataCategory result = null;
         String query = "select * from kategori where id = ?";
@@ -68,6 +69,7 @@ public class JDBCDaoCategory {
             rs = pstmt.executeQuery();
             result = new DataCategory();
             while (rs.next()) {
+                result.setId(rs.getInt("id"));
                 result.setNama(rs.getString("nama"));
             }
         } catch (SQLException ex) {

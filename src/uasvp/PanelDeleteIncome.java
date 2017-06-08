@@ -32,6 +32,11 @@ public class PanelDeleteIncome extends JPanel implements TableModelListener, Lis
     private JScrollPane tablePane;
     private JButton cancel, select;
     private DataUser currentUser;
+    private ListenerIncome listener;
+
+    public void addListenerIncome(ListenerIncome listener) {
+        this.listener = listener;
+    }
 
     public PanelDeleteIncome(DataUser currentUser) {
         this.currentUser = currentUser;
@@ -75,16 +80,24 @@ public class PanelDeleteIncome extends JPanel implements TableModelListener, Lis
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource().equals(select)) {
+            ModelIncome mi = (ModelIncome) tabel.getModel();
+            Object[] temp = mi.getRow(tabel.getSelectedRow());
+            int id =Integer.parseInt(String.valueOf(temp[3]));
+            listener.deleteIncome(id);
+        }
+        if (e.getSource().equals(cancel)) {
+            listener.cancelIncome(this);
+        }
     }
 
     @Override
     public void tableChanged(TableModelEvent e) {
-        
+
     }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        
+
     }
 }

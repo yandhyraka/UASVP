@@ -12,6 +12,12 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -29,8 +35,15 @@ public class PanelEditFormExpenditure extends JPanel implements ActionListener {
     private JButton cancel, save;
     private JComboBox category;
     private JCalendar calendar;
+    private Object[] expend;
+    private ListenerExpenditure listener;
 
-    public PanelEditFormExpenditure() {
+    public void addListenerExpenditure(ListenerExpenditure listener) {
+        this.listener = listener;
+    }
+
+    public PanelEditFormExpenditure(Object[] expend) {
+        this.expend = expend;
         initComp();
         buildGui();
         registerListener();
@@ -39,12 +52,22 @@ public class PanelEditFormExpenditure extends JPanel implements ActionListener {
     public void initComp() {
         title = new JLabel("Edit Expenditure");
         title.setFont(new Font("Arial", Font.BOLD, 28));
-        desc = new JTextField(25);
-        amount = new JTextField(25);
+        desc = new JTextField(String.valueOf(expend[1]), 25);
+        amount = new JTextField(String.valueOf(expend[2]), 25);
         cancel = new JButton("Cancel");
         save = new JButton("Save");
-        category = new JComboBox();
+        ModelCategory mc = new ModelCategory();
+        category = new JComboBox(mc.getCategory());
+        category.setSelectedIndex(Integer.parseInt(String.valueOf(expend[4])) - 1);
         calendar = new JCalendar();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = df.parse(String.valueOf(expend[0]));
+        } catch (ParseException ex) {
+            Logger.getLogger(PanelEditFormExpenditure.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        calendar.setDate(date);
     }
 
     public void buildGui() {
@@ -75,6 +98,17 @@ public class PanelEditFormExpenditure extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource().equals(save)) {
+            DataExpenditure de = new DataExpenditure();
+            de.setId(Integer.parseInt(String.valueOf(expend[5])));
+            de.setTanggal(calendar.getDate());
+            de.setKeterangan(desc.getText());
+            de.setJumlah(Integer.parseInt(amount.getText()));
+            de.setIdKategori(category.getSelectedIndex() + 1);
+            listener.editExpenditure(de);
+        }
+        if (e.getSource().equals(cancel)) {
+            listener.cancelExpenditure(this);
+        }
     }
 }

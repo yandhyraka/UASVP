@@ -197,12 +197,14 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
     @Override
     public void editIncome() {
         PanelEditListIncome peli = new PanelEditListIncome(currentUser);
+        peli.addListenerIncome(this);
         changePanel(peli);
     }
 
     @Override
     public void deleteIncome() {
         PanelDeleteIncome pdi = new PanelDeleteIncome(currentUser);
+        pdi.addListenerIncome(this);
         changePanel(pdi);
     }
     //END LISTENER MAIN INCOME
@@ -218,12 +220,14 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
     @Override
     public void editExpenditure() {
         PanelEditListExpenditure pele = new PanelEditListExpenditure(currentUser);
+        pele.addListenerExpenditure(this);
         changePanel(pele);
     }
 
     @Override
     public void deleteExpenditure() {
         PanelDeleteExpenditure pde = new PanelDeleteExpenditure(currentUser);
+        pde.addListenerExpenditure(this);
         changePanel(pde);
     }
     //END LISTENER MAIN EXPENDITURE
@@ -264,10 +268,16 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
 
     //START LISTENER INCOME
     @Override
-    public void cancelIncome() {
-        PanelMainIncome pmi = new PanelMainIncome();
-        pmi.addListenerMainIncome(this);
-        changePanel(pmi);
+    public void cancelIncome(JPanel panel) {
+        if (panel instanceof PanelEditFormIncome) {
+            PanelEditListIncome peli = new PanelEditListIncome(currentUser);
+            peli.addListenerIncome(this);
+            changePanel(peli);
+        } else {
+            PanelMainIncome pmi = new PanelMainIncome();
+            pmi.addListenerMainIncome(this);
+            changePanel(pmi);
+        }
     }
 
     @Override
@@ -281,26 +291,42 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
 
     @Override
     public void selectIncome(Object[] income) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PanelEditFormIncome pefi = new PanelEditFormIncome(income);
+        pefi.addListenerIncome(this);
+        changePanel(pefi);
     }
 
     @Override
     public void editIncome(DataIncome di) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ModelIncome mi = new ModelIncome(currentUser);
+        mi.editIncome(di);
+        PanelMainIncome pmi = new PanelMainIncome();
+        pmi.addListenerMainIncome(this);
+        changePanel(pmi);
     }
 
     @Override
-    public void deleteIncome(DataIncome di) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void deleteIncome(int id) {
+        ModelIncome mi = new ModelIncome(currentUser);
+        mi.deleteIncome(id);
+        PanelMainIncome pmi = new PanelMainIncome();
+        pmi.addListenerMainIncome(this);
+        changePanel(pmi);
     }
     //END LISTENER INCOME
 
     //START LISTENER EXPENDITURE
     @Override
-    public void cancelExpenditure() {
-        PanelMainExpenditure pme = new PanelMainExpenditure();
-        pme.addListenerMainExpenditure(this);
-        changePanel(pme);
+    public void cancelExpenditure(JPanel panel) {
+        if (panel instanceof PanelEditFormExpenditure) {
+            PanelEditListExpenditure pele = new PanelEditListExpenditure(currentUser);
+            pele.addListenerExpenditure(this);
+            changePanel(pele);
+        } else {
+            PanelMainExpenditure pme = new PanelMainExpenditure();
+            pme.addListenerMainExpenditure(this);
+            changePanel(pme);
+        }
     }
 
     @Override
@@ -314,17 +340,27 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
 
     @Override
     public void selectExpenditure(Object[] expend) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PanelEditFormExpenditure pefe = new PanelEditFormExpenditure(expend);
+        pefe.addListenerExpenditure(this);
+        changePanel(pefe);
     }
 
     @Override
     public void editExpenditure(DataExpenditure de) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ModelExpenditure me = new ModelExpenditure(currentUser);
+        me.editExpenditure(de);
+        PanelMainExpenditure pme = new PanelMainExpenditure();
+        pme.addListenerMainExpenditure(this);
+        changePanel(pme);
     }
 
     @Override
-    public void deleteExpenditure(DataExpenditure de) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void deleteExpenditure(int id) {
+        ModelExpenditure me = new ModelExpenditure(currentUser);
+        me.deleteExpenditure(id);
+        PanelMainExpenditure pme = new PanelMainExpenditure();
+        pme.addListenerMainExpenditure(this);
+        changePanel(pme);
     }
     //END LISTENER EXPENDITURE
 }

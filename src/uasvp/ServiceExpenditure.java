@@ -26,7 +26,7 @@ public class ServiceExpenditure {
         return dao.updateExpenditure(expend);
     }
     
-    public boolean deleteSelectedExpenditure(DataExpenditure expend) {
-        return dao.deleteExpenditure(expend);
+    public boolean deleteSelectedExpenditure(int id) {
+        return dao.deleteExpenditure(id);
     }
 }

@@ -84,7 +84,7 @@ public class JDBCDaoIncome {
     
     public boolean updateIncome(DataIncome income) {
         int berhasil = 0;
-        String query = "update pemasukan set `jumlah`=?,`keterangan`=?,`tanggal`=? where ?";
+        String query = "update pemasukan set `jumlah`=?,`keterangan`=?,`tanggal`=? where `id`=?";
         PreparedStatement pstmt = null;
 
         try {
@@ -105,14 +105,14 @@ public class JDBCDaoIncome {
         }
     }
     
-    public boolean deleteIncome(DataIncome income) {
+    public boolean deleteIncome(int id) {
         int berhasil = 0;
-        String query = "delete from pemasukan where ?";
+        String query = "delete from pemasukan where `id`=?";
         PreparedStatement pstmt = null;
 
         try {
             pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, income.getId());
+            pstmt.setInt(1, id);
             berhasil = pstmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(JDBCDaoUser.class.getName()).log(Level.SEVERE, null, ex);

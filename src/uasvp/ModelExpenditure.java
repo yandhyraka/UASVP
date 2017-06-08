@@ -26,12 +26,14 @@ public class ModelExpenditure extends AbstractTableModel {
         data = se.getExpenditure(user);
         rows = new Vector<Object[]>();
         for (DataExpenditure a : data) {
-            Object[] arow = new Object[4];
+            Object[] arow = new Object[6];
             String tanggal = new SimpleDateFormat("yyyy-MM-dd").format(a.getTanggal());
             arow[0] = tanggal;
             arow[1] = a.getKeterangan();
             arow[2] = a.getJumlah();
             arow[3] = sc.getCategoryById(a.getIdKategori()).getNama();
+            arow[4] = sc.getCategoryById(a.getIdKategori()).getId();
+            arow[5] = a.getId();
             rows.add(arow);
         }
     }
@@ -48,8 +50,8 @@ public class ModelExpenditure extends AbstractTableModel {
         return se.editSelectedExpenditure(expend);
     }
 
-    public boolean deleteExpenditure(DataExpenditure expend) {
-        return se.deleteSelectedExpenditure(expend);
+    public boolean deleteExpenditure(int id) {
+        return se.deleteSelectedExpenditure(id);
     }
 
     public Object[] getRow(int row) {

@@ -32,6 +32,11 @@ public class PanelDeleteExpenditure extends JPanel implements TableModelListener
     private JScrollPane tablePane;
     private JButton cancel, select;
     private DataUser currentUser;
+    private ListenerExpenditure listener;
+
+    public void addListenerExpenditure(ListenerExpenditure listener) {
+        this.listener = listener;
+    }
 
     public PanelDeleteExpenditure(DataUser currentUser) {
         this.currentUser = currentUser;
@@ -75,7 +80,15 @@ public class PanelDeleteExpenditure extends JPanel implements TableModelListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource().equals(select)) {
+            ModelExpenditure me = (ModelExpenditure) tabel.getModel();
+            Object[] temp = me.getRow(tabel.getSelectedRow());
+            int id = Integer.parseInt(String.valueOf(temp[5]));
+            listener.deleteExpenditure(id);
+        }
+        if (e.getSource().equals(cancel)) {
+            listener.cancelExpenditure(this);
+        }
     }
 
     @Override

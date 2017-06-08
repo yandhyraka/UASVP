@@ -12,6 +12,12 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,8 +33,15 @@ public class PanelEditFormIncome extends JPanel implements ActionListener {
     private JTextField desc, amount;
     private JButton cancel, save;
     private JCalendar calendar;
+    private Object[] income;
+    private ListenerIncome listener;
+    
+    public void addListenerIncome(ListenerIncome listener){
+        this.listener=listener;
+    }
 
-    public PanelEditFormIncome() {
+    public PanelEditFormIncome(Object[] income) {
+        this.income = income;
         initComp();
         buildGui();
         registerListener();
@@ -37,11 +50,19 @@ public class PanelEditFormIncome extends JPanel implements ActionListener {
     public void initComp() {
         title = new JLabel("Edit Income");
         title.setFont(new Font("Arial", Font.BOLD, 28));
-        desc = new JTextField(25);
-        amount = new JTextField(25);
+        desc = new JTextField(String.valueOf(income[1]), 25);
+        amount = new JTextField(String.valueOf(income[2]), 25);
         cancel = new JButton("Cancel");
         save = new JButton("Save");
         calendar = new JCalendar();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = df.parse(String.valueOf(income[0]));
+        } catch (ParseException ex) {
+            Logger.getLogger(PanelEditFormIncome.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        calendar.setDate(date);
     }
 
     public void buildGui() {
@@ -70,6 +91,16 @@ public class PanelEditFormIncome extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource().equals(save)) {
+            DataIncome di=new DataIncome();
+            di.setId(Integer.parseInt(String.valueOf(income[3])));
+            di.setTanggal(calendar.getDate());
+            di.setKeterangan(desc.getText());
+            di.setJumlah(Integer.parseInt(amount.getText()));
+            listener.editIncome(di);
+        }
+        if (e.getSource().equals(cancel)) {
+            listener.cancelIncome(this);
+        }
     }
 }

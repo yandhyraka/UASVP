@@ -10,7 +10,17 @@ package uasvp;
  * @author User
  */
 public class DataCategory {
+
+    private int id;
     private String nama;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNama() {
         return nama;
@@ -19,6 +29,5 @@ public class DataCategory {
     public void setNama(String nama) {
         this.nama = nama;
     }
-    
-    
+
 }

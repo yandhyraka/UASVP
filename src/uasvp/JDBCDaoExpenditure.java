@@ -84,7 +84,7 @@ public class JDBCDaoExpenditure {
     
     public boolean updateExpenditure(DataExpenditure expend) {
         int berhasil = 0;
-        String query = "update pengeluaran set `jumlah`=?,`keterangan`=?,`tanggal`=?,`id_kategori`=? where ?";
+        String query = "update pengeluaran set `jumlah`=?,`keterangan`=?,`tanggal`=?,`id_kategori`=? where `id`=?";
         PreparedStatement pstmt = null;
 
         try {
@@ -106,14 +106,14 @@ public class JDBCDaoExpenditure {
         }
     }
     
-    public boolean deleteExpenditure(DataExpenditure expend) {
+    public boolean deleteExpenditure(int id) {
         int berhasil = 0;
-        String query = "delete from pengeluaran where ?";
+        String query = "delete from pengeluaran where `id`=?";
         PreparedStatement pstmt = null;
 
         try {
             pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, expend.getId());
+            pstmt.setInt(1, id);
             berhasil = pstmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(JDBCDaoUser.class.getName()).log(Level.SEVERE, null, ex);

@@ -5,13 +5,15 @@
  */
 package uasvp;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author User
  */
 public interface ListenerExpenditure {
 
-    public void cancelExpenditure();
+    public void cancelExpenditure(JPanel panel);
 
     public void addExpenditure(DataExpenditure de);
     
@@ -19,5 +21,5 @@ public interface ListenerExpenditure {
 
     public void editExpenditure(DataExpenditure de);
 
-    public void deleteExpenditure(DataExpenditure de);
+    public void deleteExpenditure(int id);
 }

@@ -84,7 +84,7 @@ public class PanelAddIncome extends JPanel implements ActionListener {
         }
         
         if (e.getSource().equals(cancel)) {
-            listener.cancelIncome();
+            listener.cancelIncome(this);
         }
     }
 }

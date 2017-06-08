@@ -32,6 +32,11 @@ public class PanelEditListExpenditure extends JPanel implements TableModelListen
     private JScrollPane tablePane;
     private JButton cancel, select;
     private DataUser currentUser;
+    private ListenerExpenditure listener;
+
+    public void addListenerExpenditure(ListenerExpenditure listener) {
+        this.listener = listener;
+    }
 
     public PanelEditListExpenditure(DataUser currentUser) {
         this.currentUser = currentUser;
@@ -75,7 +80,14 @@ public class PanelEditListExpenditure extends JPanel implements TableModelListen
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource().equals(select)) {
+            ModelExpenditure me = (ModelExpenditure) tabel.getModel();
+            Object[] temp = me.getRow(tabel.getSelectedRow());
+            listener.selectExpenditure(temp);
+        }
+        if (e.getSource().equals(cancel)) {
+            listener.cancelExpenditure(this);
+        }
     }
 
     @Override

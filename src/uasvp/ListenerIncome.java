@@ -5,13 +5,15 @@
  */
 package uasvp;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author User
  */
 public interface ListenerIncome {
 
-    public void cancelIncome();
+    public void cancelIncome(JPanel panel);
 
     public void addIncome(DataIncome di);
     
@@ -19,5 +21,5 @@ public interface ListenerIncome {
 
     public void editIncome(DataIncome di);
 
-    public void deleteIncome(DataIncome di);
+    public void deleteIncome(int id);
 }
