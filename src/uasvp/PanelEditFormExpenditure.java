@@ -12,6 +12,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,7 +30,7 @@ import javax.swing.JTextField;
  *
  * @author User
  */
-public class PanelEditFormExpenditure extends JPanel implements ActionListener {
+public class PanelEditFormExpenditure extends JPanel implements ActionListener, KeyListener {
 
     private JLabel title;
     private JTextField desc, amount;
@@ -92,6 +94,7 @@ public class PanelEditFormExpenditure extends JPanel implements ActionListener {
     }
 
     public void registerListener() {
+        amount.addKeyListener(this);
         cancel.addActionListener(this);
         save.addActionListener(this);
     }
@@ -110,5 +113,26 @@ public class PanelEditFormExpenditure extends JPanel implements ActionListener {
         if (e.getSource().equals(cancel)) {
             listener.cancelExpenditure(this);
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        if (e.getSource().equals(amount)) {
+            char chara = e.getKeyChar();
+            if (!(((chara >= '0') && (chara <= '9') || (chara == KeyEvent.VK_BACK_SPACE) || (chara == KeyEvent.VK_DELETE)))) {
+                getToolkit().beep();
+                e.consume();
+            }
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        //
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        //
     }
 }
