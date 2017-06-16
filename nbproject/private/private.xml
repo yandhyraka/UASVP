@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/Tugas/Netbeans/UASVP/src/uasvp/PanelDeleteExpenditure.java</file>
             <file>file:/D:/Tugas/Netbeans/UASVP/src/uasvp/PanelDeleteIncome.java</file>
             <file>file:/D:/Tugas/Netbeans/UASVP/src/uasvp/PanelAddExpenditure.java</file>
@@ -12,6 +13,23 @@
             <file>file:/D:/Tugas/Netbeans/UASVP/src/uasvp/PanelAddIncome.java</file>
             <file>file:/D:/Tugas/Netbeans/UASVP/src/uasvp/MainFrame.java</file>
             <file>file:/D:/Tugas/Netbeans/UASVP/src/uasvp/PanelEditFormIncome.java</file>
+=======
+            <file>file:/E:/Hans/Desktop/UC/VP/UASVP/src/uasvp/MainFrame.java</file>
+            <file>file:/E:/Hans/Desktop/UC/VP/UASVP/src/uasvp/PanelAddBudget.java</file>
+            <file>file:/E:/Hans/Desktop/UC/VP/UASVP/src/uasvp/PanelDeleteBudget.java</file>
+            <file>file:/E:/Hans/Desktop/UC/VP/UASVP/src/uasvp/PanelAddIncome.java</file>
+            <file>file:/E:/Hans/Desktop/UC/VP/UASVP/src/uasvp/PanelAddExpenditure.java</file>
+            <file>file:/E:/Hans/Desktop/UC/VP/UASVP/src/uasvp/PanelEditFormBudget.java</file>
+            <file>file:/E:/Hans/Desktop/UC/VP/UASVP/src/uasvp/PanelEditFormExpenditure.java</file>
+            <file>file:/E:/Hans/Desktop/UC/VP/UASVP/src/uasvp/PanelMainIncome.java</file>
+            <file>file:/E:/Hans/Desktop/UC/VP/UASVP/src/uasvp/DataIncome.java</file>
+            <file>file:/E:/Hans/Desktop/UC/VP/UASVP/src/uasvp/PanelEditFormIncome.java</file>
+            <file>file:/E:/Hans/Desktop/UC/VP/UASVP/src/uasvp/PanelEditFormDebt.java</file>
+            <file>file:/E:/Hans/Desktop/UC/VP/UASVP/src/uasvp/ListenerIncome.java</file>
+            <file>file:/E:/Hans/Desktop/UC/VP/UASVP/src/uasvp/PanelAddDebt.java</file>
+            <file>file:/E:/Hans/Desktop/UC/VP/UASVP/src/uasvp/JDBCDaoIncome.java</file>
+            <file>file:/E:/Hans/Desktop/UC/VP/UASVP/src/uasvp/ServiceIncome.java</file>
+>>>>>>> 805fd2e5bde13bfd316f4359bd6ecbd68521afc8
         </group>
     </open-files>
 </project-private>

@@ -55,7 +55,7 @@ public class PanelRegister extends JPanel implements ActionListener {
         CellConstraints c = new CellConstraints();
 
         this.add(title, c.xyw(3, 2, 4));
-        this.add(new JLabel("Fullname"), c.xy(2, 4));
+        this.add(new JLabel("Full name"), c.xy(2, 4));
         this.add(fullname, c.xyw(4, 4, 4));
         this.add(new JLabel("Username"), c.xy(2, 6));
         this.add(username, c.xyw(4, 6, 4));
