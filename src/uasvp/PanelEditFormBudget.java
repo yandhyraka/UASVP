@@ -38,7 +38,7 @@ public class PanelEditFormBudget extends JPanel implements ActionListener, KeyLi
     }
 
     public PanelEditFormBudget(Object[] budget) {
-        this.budget=budget;
+        this.budget = budget;
         initComp();
         buildGui();
         registerListener();
@@ -102,7 +102,7 @@ public class PanelEditFormBudget extends JPanel implements ActionListener, KeyLi
             db.setId(Integer.parseInt(String.valueOf(budget[5])));
             db.setBulan(getNamaBulan(month.getSelectedIndex()));
             db.setJumlah(Integer.parseInt(amount.getText()));
-            db.setSisa((Integer.parseInt(String.valueOf(budget[4])))-(Integer.parseInt(String.valueOf(budget[1])))+(Integer.parseInt(amount.getText())));
+            db.setSisa((Integer.parseInt(String.valueOf(budget[4]))) - (Integer.parseInt(String.valueOf(budget[1]))) + (Integer.parseInt(amount.getText())));
             db.setIdKategori(category.getSelectedIndex() + 1);
             listener.editBudget(db);
         }
@@ -111,9 +111,6 @@ public class PanelEditFormBudget extends JPanel implements ActionListener, KeyLi
             listener.cancelBudget(this);
         }
     }
-<<<<<<< HEAD
-}
-=======
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -136,4 +133,3 @@ public class PanelEditFormBudget extends JPanel implements ActionListener, KeyLi
         //
     }
 }
->>>>>>> 805fd2e5bde13bfd316f4359bd6ecbd68521afc8
