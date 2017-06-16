@@ -5,10 +5,21 @@
  */
 package uasvp;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author User
  */
 public interface ListenerBudget {
-    
+
+    public void cancelBudget(JPanel panel);
+
+    public void addBudget(DataBudget db);
+
+    public void selectBudget(Object[] budget);
+
+    public void editBudget(DataBudget db);
+
+    public void deleteBudget(int id);
 }

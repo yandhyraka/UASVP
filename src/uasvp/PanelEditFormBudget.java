@@ -24,11 +24,19 @@ import javax.swing.JTextField;
 public class PanelEditFormBudget extends JPanel implements ActionListener {
 
     private JLabel title;
-    private JTextField desc, amount;
+    private JTextField amount;
     private JButton cancel, save;
     private JComboBox month, category;
+    private String[] bulan = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    private Object[] budget;
+    private ListenerBudget listener;
 
-    public PanelEditFormBudget() {
+    public void addListenerBudget(ListenerBudget listener) {
+        this.listener = listener;
+    }
+
+    public PanelEditFormBudget(Object[] budget) {
+        this.budget=budget;
         initComp();
         buildGui();
         registerListener();
@@ -37,18 +45,20 @@ public class PanelEditFormBudget extends JPanel implements ActionListener {
     public void initComp() {
         title = new JLabel("Edit Budget");
         title.setFont(new Font("Arial", Font.BOLD, 28));
-        desc = new JTextField(25);
-        amount = new JTextField(25);
+        amount = new JTextField(String.valueOf(budget[1]), 25);
         cancel = new JButton("Cancel");
         save = new JButton("Save");
-        month=new JComboBox();
-        category=new JComboBox();
+        month = new JComboBox(bulan);
+        month.setSelectedIndex(getIdBulan(String.valueOf(budget[0])));
+        ModelCategory mc = new ModelCategory();
+        category = new JComboBox(mc.getCategory());
+        category.setSelectedIndex(Integer.parseInt(String.valueOf(budget[3])) - 1);
     }
 
     public void buildGui() {
         this.setPreferredSize(new Dimension(325, 290));
         String column = "20dlu, pref, 10dlu, 10dlu, 5dlu, 10dlu, 5dlu, 10dlu, 10dlu, 5dlu, 42dlu, 10dlu";
-        String row = "15dlu, pref, 15dlu, pref, 10dlu, pref, 10dlu, pref, 10dlu, pref, 10dlu, pref, 10dlu";
+        String row = "15dlu, pref, 15dlu, pref, 10dlu, pref, 10dlu, pref, 10dlu, pref, 10dlu";
         FormLayout layout = new FormLayout(column, row);
         this.setLayout(layout);
         CellConstraints c = new CellConstraints();
@@ -56,14 +66,25 @@ public class PanelEditFormBudget extends JPanel implements ActionListener {
         this.add(title, c.xyw(2, 2, 10, "center, center"));
         this.add(new JLabel("Month"), c.xy(2, 4));
         this.add(month, c.xyw(4, 4, 8));
-        this.add(new JLabel("Description"), c.xy(2, 6));
-        this.add(desc, c.xyw(4, 6, 8));
-        this.add(new JLabel("Amount"), c.xy(2, 8));
-        this.add(amount, c.xyw(4, 8, 8));
-        this.add(new JLabel("Category"), c.xy(2, 10));
-        this.add(category, c.xyw(4, 10, 8));
-        this.add(cancel, c.xyw(2, 12, 3));
-        this.add(save, c.xyw(9, 12, 3));
+        this.add(new JLabel("Amount"), c.xy(2, 6));
+        this.add(amount, c.xyw(4, 6, 8));
+        this.add(new JLabel("Category"), c.xy(2, 8));
+        this.add(category, c.xyw(4, 8, 8));
+        this.add(cancel, c.xyw(2, 10, 3));
+        this.add(save, c.xyw(9, 10, 3));
+    }
+
+    public int getIdBulan(String bulan) {
+        for (int i = 0; i < 12; i++) {
+            if (bulan.equalsIgnoreCase(this.bulan[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public String getNamaBulan(int a) {
+        return bulan[a];
     }
 
     public void registerListener() {
@@ -73,6 +94,18 @@ public class PanelEditFormBudget extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource().equals(save)) {
+            DataBudget db = new DataBudget();
+            db.setId(Integer.parseInt(String.valueOf(budget[5])));
+            db.setBulan(getNamaBulan(month.getSelectedIndex()));
+            db.setJumlah(Integer.parseInt(amount.getText()));
+            db.setSisa((Integer.parseInt(String.valueOf(budget[4])))-(Integer.parseInt(String.valueOf(budget[1])))+(Integer.parseInt(amount.getText())));
+            db.setIdKategori(category.getSelectedIndex() + 1);
+            listener.editBudget(db);
+        }
 
+        if (e.getSource().equals(cancel)) {
+            listener.cancelBudget(this);
+        }
     }
 }

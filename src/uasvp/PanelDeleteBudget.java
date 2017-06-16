@@ -14,19 +14,32 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 /**
  *
  * @author User
  */
-public class PanelDeleteBudget extends JPanel implements ActionListener {
+public class PanelDeleteBudget extends JPanel implements TableModelListener, ListSelectionListener, ActionListener {
 
     private JLabel title;
     private JTable tabel;
+    private JScrollPane tablePane;
     private JButton cancel, select;
+    private DataUser currentUser;
+    private ListenerBudget listener;
 
-    public PanelDeleteBudget() {
+    public void addListenerBudget(ListenerBudget listener) {
+        this.listener = listener;
+    }
+
+    public PanelDeleteBudget(DataUser currentUser) {
+        this.currentUser = currentUser;
         initComp();
         buildGui();
         registerListener();
@@ -35,8 +48,13 @@ public class PanelDeleteBudget extends JPanel implements ActionListener {
     public void initComp() {
         title = new JLabel("Delete Budget");
         title.setFont(new Font("Arial", Font.BOLD, 28));
+        ModelBudget mb = new ModelBudget(currentUser);
         tabel = new JTable();
-        tabel.setPreferredSize(new Dimension(250, 150));
+        tabel.setModel(mb);
+        tabel.setAutoCreateRowSorter(true);
+        tabel.setRowHeight(20);
+        tablePane = new JScrollPane(tabel);
+        tablePane.setPreferredSize(new Dimension(250, 150));
         cancel = new JButton("Cancel");
         select = new JButton("Select");
     }
@@ -50,7 +68,7 @@ public class PanelDeleteBudget extends JPanel implements ActionListener {
         CellConstraints c = new CellConstraints();
 
         this.add(title, c.xyw(2, 2, 3, "center, center"));
-        this.add(tabel, c.xyw(2, 4, 3, "center, center"));
+        this.add(tablePane, c.xyw(2, 4, 3, "center, center"));
         this.add(cancel, c.xy(2, 6));
         this.add(select, c.xy(4, 6));
     }
@@ -62,6 +80,24 @@ public class PanelDeleteBudget extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource().equals(select)) {
+            ModelBudget mb = (ModelBudget) tabel.getModel();
+            Object[] temp = mb.getRow(tabel.getSelectedRow());
+            int id = Integer.parseInt(String.valueOf(temp[5]));
+            listener.deleteBudget(id);
+        }
+        if (e.getSource().equals(cancel)) {
+            listener.cancelBudget(this);
+        }
+    }
 
+    @Override
+    public void tableChanged(TableModelEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

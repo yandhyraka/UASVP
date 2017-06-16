@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  *
  * @author User
  */
-public class MainFrame extends JFrame implements ActionListener, ListenerLogin, ListenerRegister, ListenerMainMenu, ListenerMainIncome, ListenerMainExpenditure, ListenerMainBudget, ListenerMainDebt, ListenerIncome, ListenerExpenditure {
+public class MainFrame extends JFrame implements ActionListener, ListenerLogin, ListenerRegister, ListenerMainMenu, ListenerMainIncome, ListenerMainExpenditure, ListenerMainBudget, ListenerMainDebt, ListenerIncome, ListenerExpenditure, ListenerBudget {
 
     private JMenuBar registerMB, homeMB, defaultMB;
     private JMenuItem back, backReg, mainMenu, logout, logoutHome;
@@ -236,18 +236,21 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
     @Override
     public void addBudget() {
         PanelAddBudget pab = new PanelAddBudget();
+        pab.addListenerBudget(this);
         changePanel(pab);
     }
 
     @Override
     public void editBudget() {
-        PanelEditListBudget pelb = new PanelEditListBudget();
+        PanelEditListBudget pelb = new PanelEditListBudget(currentUser);
+        pelb.addListenerBudget(this);
         changePanel(pelb);
     }
 
     @Override
     public void deleteBudget() {
-        PanelDeleteBudget pdb = new PanelDeleteBudget();
+        PanelDeleteBudget pdb = new PanelDeleteBudget(currentUser);
+        pdb.addListenerBudget(this);
         changePanel(pdb);
     }
     //END LISTENER MAIN BUDGET
@@ -363,4 +366,53 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
         changePanel(pme);
     }
     //END LISTENER EXPENDITURE
+
+    //START LISTENER BUDGET
+    @Override
+    public void cancelBudget(JPanel panel) {
+        if (panel instanceof PanelEditFormBudget) {
+            PanelEditListBudget pelb = new PanelEditListBudget(currentUser);
+            pelb.addListenerBudget(this);
+            changePanel(pelb);
+        } else {
+            PanelMainBudget pmb = new PanelMainBudget();
+            pmb.addListenerMainBudget(this);
+            changePanel(pmb);
+        }
+    }
+
+    @Override
+    public void addBudget(DataBudget db) {
+        ModelBudget mb = new ModelBudget(currentUser);
+        mb.inputBudget(currentUser, db);
+        PanelMainBudget pmb = new PanelMainBudget();
+        pmb.addListenerMainBudget(this);
+        changePanel(pmb);
+    }
+
+    @Override
+    public void selectBudget(Object[] budget) {
+        PanelEditFormBudget pefb = new PanelEditFormBudget(budget);
+        pefb.addListenerBudget(this);
+        changePanel(pefb);
+    }
+
+    @Override
+    public void editBudget(DataBudget db) {
+        ModelBudget mb = new ModelBudget(currentUser);
+        mb.editBudget(db);
+        PanelMainBudget pmb = new PanelMainBudget();
+        pmb.addListenerMainBudget(this);
+        changePanel(pmb);
+    }
+
+    @Override
+    public void deleteBudget(int id) {
+        ModelBudget mb = new ModelBudget(currentUser);
+        mb.deleteBudget(id);
+        PanelMainBudget pmb = new PanelMainBudget();
+        pmb.addListenerMainBudget(this);
+        changePanel(pmb);
+    }
+    //END LISTENER BUDGET
 }
