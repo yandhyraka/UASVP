@@ -14,6 +14,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -31,8 +38,17 @@ public class PanelEditFormDebt extends JPanel implements ActionListener, KeyList
     private JButton cancel, save;
     private JComboBox from, to, status;
     private JCalendar calendar;
+    private String[] isiStatus = {"Not Paid", "Paid"};
+    private Object[] debt;
+    private ListenerDebt listener;
+    private ModelUser mc = new ModelUser();
 
-    public PanelEditFormDebt() {
+    public void addListenerDebt(ListenerDebt listener) {
+        this.listener = listener;
+    }
+
+    public PanelEditFormDebt(Object[] debt) {
+        this.debt = debt;
         initComp();
         buildGui();
         registerListener();
@@ -41,13 +57,41 @@ public class PanelEditFormDebt extends JPanel implements ActionListener, KeyList
     public void initComp() {
         title = new JLabel("Edit Debt");
         title.setFont(new Font("Arial", Font.BOLD, 28));
-        amount = new JTextField(25);
+        amount = new JTextField(String.valueOf(debt[1]), 25);
         cancel = new JButton("Cancel");
         save = new JButton("Save");
-        from = new JComboBox();
-        to = new JComboBox();
-        status = new JComboBox();
+        from = new JComboBox(mc.getUser());
+        from.setSelectedIndex(getIdUser(String.valueOf(debt[2])));
+        to = new JComboBox(mc.getUser());
+        to.setSelectedIndex(getIdUser(String.valueOf(debt[3])));
+        status = new JComboBox(isiStatus);
+        if (String.valueOf(debt[4]).equalsIgnoreCase("Not Paid")) {
+            status.setSelectedIndex(0);
+        } else {
+            status.setSelectedIndex(1);
+        }
         calendar = new JCalendar();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = df.parse(String.valueOf(debt[0]));
+        } catch (ParseException ex) {
+            Logger.getLogger(PanelEditFormDebt.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        calendar.setDate(date);
+    }
+
+    public int getIdUser(String user) {
+        Vector<String> users = mc.getUser();
+        int jumlah = 0;
+        for (String s : users) {
+            if (user.equalsIgnoreCase(s)) {
+                return jumlah;
+            } else {
+                jumlah++;
+            }
+        }
+        return -1;
     }
 
     public void buildGui() {
@@ -82,7 +126,18 @@ public class PanelEditFormDebt extends JPanel implements ActionListener, KeyList
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(save)) {
-            System.out.println(calendar.getCalendar().getTime());
+            DataDebt dd = new DataDebt();
+            dd.setId(Integer.parseInt(String.valueOf(debt[5])));
+            dd.setTanggal(calendar.getDate());
+            dd.setUsername1(from.getSelectedItem().toString());
+            dd.setUsername2(to.getSelectedItem().toString());
+            dd.setJumlah(Integer.parseInt(amount.getText()));
+            dd.setStatus(status.getSelectedIndex());
+            listener.editDebt(dd);
+        }
+
+        if (e.getSource().equals(cancel)) {
+            listener.cancelDebt(this);
         }
     }
 

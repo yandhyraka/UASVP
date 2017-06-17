@@ -13,9 +13,9 @@ import java.util.Date;
  */
 public class DataDebt {
 
-    private String usernamePenghutang;
+    private String username1, username2;
     private Date tanggal;
-    private int id, jumlah , status;
+    private int id, jumlah, status;
 
     public int getId() {
         return id;
@@ -25,12 +25,20 @@ public class DataDebt {
         this.id = id;
     }
 
-    public String getUsernamePenghutang() {
-        return usernamePenghutang;
+    public String getUsername2() {
+        return username2;
     }
 
-    public void setUsernamePenghutang(String usernamePenghutang) {
-        this.usernamePenghutang = usernamePenghutang;
+    public void setUsername2(String username2) {
+        this.username2 = username2;
+    }
+
+    public String getUsername1() {
+        return username1;
+    }
+
+    public void setUsername1(String username1) {
+        this.username1 = username1;
     }
 
     public Date getTanggal() {

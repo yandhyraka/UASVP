@@ -31,6 +31,11 @@ public class PanelAddDebt extends JPanel implements ActionListener, KeyListener 
     private JButton cancel, save;
     private JComboBox from, to;
     private JCalendar calendar;
+    private ListenerDebt listener;
+
+    public void addListenerDebt(ListenerDebt listener) {
+        this.listener = listener;
+    }
 
     public PanelAddDebt() {
         initComp();
@@ -44,8 +49,9 @@ public class PanelAddDebt extends JPanel implements ActionListener, KeyListener 
         amount = new JTextField(25);
         cancel = new JButton("Cancel");
         save = new JButton("Save");
-        from = new JComboBox();
-        to = new JComboBox();
+        ModelUser mu = new ModelUser();
+        from = new JComboBox(mu.getUser());
+        to = new JComboBox(mu.getUser());
         calendar = new JCalendar();
     }
 
@@ -78,7 +84,19 @@ public class PanelAddDebt extends JPanel implements ActionListener, KeyListener 
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource().equals(save)) {
+            DataDebt dd = new DataDebt();
+            dd.setTanggal(calendar.getDate());
+            dd.setUsername1(from.getSelectedItem().toString());
+            dd.setUsername2(to.getSelectedItem().toString());
+            dd.setJumlah(Integer.parseInt(amount.getText()));
+            dd.setStatus(0);
+            listener.addDebt(dd);
+        }
 
+        if (e.getSource().equals(cancel)) {
+            listener.cancelDebt(this);
+        }
     }
 
     @Override

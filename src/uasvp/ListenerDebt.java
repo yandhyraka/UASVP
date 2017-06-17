@@ -5,10 +5,18 @@
  */
 package uasvp;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author User
  */
 public interface ListenerDebt {
-    
+
+    public void cancelDebt(JPanel panel);
+
+    public void addDebt(DataDebt dd);
+
+    public void editDebt(DataDebt dd);
+
 }

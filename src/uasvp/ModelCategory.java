@@ -12,17 +12,18 @@ import java.util.Vector;
  * @author User
  */
 public class ModelCategory {
-    private ServiceCategory sc=new ServiceCategory();
-    
-    public Vector<String> getCategory(){
+
+    private ServiceCategory sc = new ServiceCategory();
+
+    public Vector<String> getCategory() {
         Vector<String> kategori = new Vector<String>();
-        for(DataCategory dc: sc.getCategory()){
+        for (DataCategory dc : sc.getCategory()) {
             kategori.add(dc.getNama());
         }
         return kategori;
     }
-    
-    public DataCategory getCategoryById(int id){
+
+    public DataCategory getCategoryById(int id) {
         return sc.getCategoryById(id);
     }
 }

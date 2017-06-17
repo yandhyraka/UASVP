@@ -11,9 +11,17 @@ import java.util.Vector;
  *
  * @author User
  */
-public class ModelRegister {
+public class ModelUser {
 
-    ServiceUser su = new ServiceUser();
+    private ServiceUser su = new ServiceUser();
+
+    public Vector<String> getUser() {
+        Vector<String> user = new Vector<String>();
+        for (DataUser dc : su.getUsers()) {
+            user.add(dc.getUsername());
+        }
+        return user;
+    }
 
     public boolean checkRegister(String username) {
         Vector<DataUser> users = su.getUsers();
@@ -28,5 +36,16 @@ public class ModelRegister {
 
     public boolean registerUser(DataUser user) {
         return su.addNewUser(user);
+    }
+
+    public DataUser checkLogin(String username, String password) {
+        for (DataUser u : su.getUsers()) {
+            if (u.getUsername().equals(username)) {
+                if (u.getPassword().equals(password)) {
+                    return u;
+                }
+            }
+        }
+        return null;
     }
 }

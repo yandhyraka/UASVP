@@ -88,7 +88,7 @@ public class PanelAddExpenditure extends JPanel implements ActionListener, KeyLi
             de.setTanggal(calendar.getDate());
             de.setKeterangan(desc.getText());
             de.setJumlah(Integer.parseInt(amount.getText()));
-            de.setIdKategori(category.getSelectedIndex()+1);
+            de.setIdKategori(category.getSelectedIndex() + 1);
             listener.addExpenditure(de);
         }
 

@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  *
  * @author User
  */
-public class MainFrame extends JFrame implements ActionListener, ListenerLogin, ListenerRegister, ListenerMainMenu, ListenerMainIncome, ListenerMainExpenditure, ListenerMainBudget, ListenerMainDebt, ListenerIncome, ListenerExpenditure, ListenerBudget {
+public class MainFrame extends JFrame implements ActionListener, ListenerLogin, ListenerRegister, ListenerMainMenu, ListenerMainIncome, ListenerMainExpenditure, ListenerMainBudget, ListenerMainDebt, ListenerIncome, ListenerExpenditure, ListenerBudget, ListenerDebt {
 
     private JMenuBar registerMB, homeMB, defaultMB;
     private JMenuItem back, backReg, mainMenu, logout, logoutHome;
@@ -108,8 +108,8 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
     //START LISTENER LOGIN
     @Override
     public DataUser attemptLogin(String username, String password) {
-        ModelLogin ml = new ModelLogin();
-        DataUser du = ml.checkLogin(username, password);
+        ModelUser mu = new ModelUser();
+        DataUser du = mu.checkLogin(username, password);
         return du;
     }
 
@@ -134,15 +134,15 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
     //START LISTENER REGISTER
     @Override
     public boolean checkUsername(String username) {
-        ModelRegister mr = new ModelRegister();
-        boolean b = mr.checkRegister(username);
+        ModelUser mu = new ModelUser();
+        boolean b = mu.checkRegister(username);
         return b;
     }
 
     @Override
     public void registerSucceed(DataUser user) {
-        ModelRegister mr = new ModelRegister();
-        mr.registerUser(user);
+        ModelUser mu = new ModelUser();
+        mu.registerUser(user);
         PanelLogin pl = new PanelLogin();
         pl.addLoginListener(this);
         changePanel(pl);
@@ -167,7 +167,7 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
 
     @Override
     public void debt() {
-        PanelMainDebt pmd = new PanelMainDebt();
+        PanelMainDebt pmd = new PanelMainDebt(currentUser);
         pmd.addListenerMainDebt(this);
         changePanel(pmd);
     }
@@ -259,12 +259,14 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
     @Override
     public void addDebt() {
         PanelAddDebt pad = new PanelAddDebt();
+        pad.addListenerDebt(this);
         changePanel(pad);
     }
 
     @Override
-    public void editDebt() {
-        PanelEditFormDebt pefd = new PanelEditFormDebt();
+    public void editDebt(Object[] debt) {
+        PanelEditFormDebt pefd = new PanelEditFormDebt(debt);
+        pefd.addListenerDebt(this);
         changePanel(pefd);
     }
     //END LISTENER MAIN DEBT
@@ -415,4 +417,31 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
         changePanel(pmb);
     }
     //END LISTENER BUDGET
+
+    //START LISTENER DEBT
+    @Override
+    public void cancelDebt(JPanel panel) {
+        PanelMainDebt pmd = new PanelMainDebt(currentUser);
+        pmd.addListenerMainDebt(this);
+        changePanel(pmd);
+    }
+
+    @Override
+    public void addDebt(DataDebt dd) {
+        ModelDebt mb = new ModelDebt(currentUser);
+        mb.inputDebt(dd);
+        PanelMainDebt pmd = new PanelMainDebt(currentUser);
+        pmd.addListenerMainDebt(this);
+        changePanel(pmd);
+    }
+
+    @Override
+    public void editDebt(DataDebt dd) {
+        ModelDebt mb = new ModelDebt(currentUser);
+        mb.editDebt(dd);
+        PanelMainDebt pmd = new PanelMainDebt(currentUser);
+        pmd.addListenerMainDebt(this);
+        changePanel(pmd);
+    }
+    //END LISTENER DEBT
 }

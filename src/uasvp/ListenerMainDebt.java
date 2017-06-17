@@ -13,5 +13,5 @@ public interface ListenerMainDebt {
 
     public void addDebt();
 
-    public void editDebt();
+    public void editDebt(Object[] debt);
 }

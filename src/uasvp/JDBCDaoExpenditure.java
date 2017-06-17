@@ -72,7 +72,7 @@ public class JDBCDaoExpenditure {
             pstmt.setInt(5, expend.getIdKategori());
             berhasil = pstmt.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(JDBCDaoUser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JDBCDaoExpenditure.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         if (berhasil > 0) {
@@ -96,7 +96,7 @@ public class JDBCDaoExpenditure {
             pstmt.setInt(5, expend.getId());
             berhasil = pstmt.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(JDBCDaoUser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JDBCDaoExpenditure.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         if (berhasil > 0) {
@@ -116,7 +116,7 @@ public class JDBCDaoExpenditure {
             pstmt.setInt(1, id);
             berhasil = pstmt.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(JDBCDaoUser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JDBCDaoExpenditure.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         if (berhasil > 0) {
