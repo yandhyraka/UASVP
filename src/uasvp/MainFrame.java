@@ -181,7 +181,7 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
 
     @Override
     public void transactionHistory() {
-        PanelHistory ph = new PanelHistory();
+        PanelHistory ph = new PanelHistory(currentUser);
         changePanel(ph);
     }
     //END LISTENER MAIN MENU

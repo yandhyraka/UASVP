@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
@@ -53,15 +54,22 @@ public class PanelMainDebt extends JPanel implements TableModelListener, ListSel
         tabel.setModel(md);
         tabel.setAutoCreateRowSorter(true);
         tabel.setRowHeight(20);
+        tabel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tabel.getColumnModel().getColumn(0).setPreferredWidth(100);
+        tabel.getColumnModel().getColumn(1).setPreferredWidth(100);
+        tabel.getColumnModel().getColumn(2).setPreferredWidth(100);
+        tabel.getColumnModel().getColumn(3).setPreferredWidth(100);
+        tabel.getColumnModel().getColumn(4).setPreferredWidth(100);
+        tabel.getRowSorter().toggleSortOrder(0);
         tablePane = new JScrollPane(tabel);
-        tablePane.setPreferredSize(new Dimension(250, 150));
+        tablePane.setPreferredSize(new Dimension(500, 150));
         newButton = new JButton("New");
         editButton = new JButton("Edit");
     }
 
     public void buildGui() {
-        this.setPreferredSize(new Dimension(320, 300));
-        String column = "20dlu, 65dlu, 10dlu, 65dlu, 10dlu";
+        this.setPreferredSize(new Dimension(550, 300));
+        String column = "85dlu, 65dlu, 10dlu, 65dlu, 10dlu";
         String row = "15dlu, pref, 15dlu, pref, 10dlu, pref, 10dlu";
         FormLayout layout = new FormLayout(column, row);
         this.setLayout(layout);
