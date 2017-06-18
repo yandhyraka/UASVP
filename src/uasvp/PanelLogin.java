@@ -24,10 +24,10 @@ public class PanelLogin extends JPanel implements ActionListener {
     
     private JLabel title;
     private JTextField username, password;
-    private JButton register, login;
+    private JButton login;
     private ListenerLogin listener;
 
-    public void addLoginListener(ListenerLogin listener) {
+    public void addListenerLogin(ListenerLogin listener) {
         this.listener = listener;
     }
     
@@ -42,12 +42,11 @@ public class PanelLogin extends JPanel implements ActionListener {
         title.setFont(new Font("Arial", Font.BOLD, 28));
         username = new JTextField(20);
         password = new JTextField(25);
-        register = new JButton("Register");
         login = new JButton("Login");
     }
     
     public void buildGui() {
-        this.setPreferredSize(new Dimension(300, 200));
+        this.setPreferredSize(new Dimension(300, 210));
         String column = "20dlu, pref, 10dlu, 15dlu, 10dlu, 50dlu, 10dlu";
         String row = "15dlu, pref, 15dlu, pref, 10dlu, pref, 10dlu, pref, 10dlu, pref, 10dlu, pref, 10dlu";
         FormLayout layout = new FormLayout(column, row);
@@ -59,20 +58,15 @@ public class PanelLogin extends JPanel implements ActionListener {
         this.add(username, c.xyw(4, 4, 4));
         this.add(new JLabel("Password"), c.xy(2, 6));
         this.add(password, c.xyw(4, 6, 4));
-        this.add(register, c.xyw(2, 8, 3));
         this.add(login, c.xyw(6, 8, 2));
     }
     
     public void registerListener() {
-        register.addActionListener(this);
         login.addActionListener(this);
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource().equals(register)) {
-            listener.register();
-        }
         if (e.getSource().equals(login)) {
             DataUser du = listener.attemptLogin(username.getText(), password.getText());
             if (du != null) {

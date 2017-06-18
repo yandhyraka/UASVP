@@ -32,12 +32,16 @@ public class PanelAddDebt extends JPanel implements ActionListener, KeyListener 
     private JComboBox from, to;
     private JCalendar calendar;
     private ListenerDebt listener;
+    private DataUser currentUser;
+    private ModelUser mu;
+    private int indexUser, totalUser;
 
     public void addListenerDebt(ListenerDebt listener) {
         this.listener = listener;
     }
 
-    public PanelAddDebt() {
+    public PanelAddDebt(DataUser currentUser) {
+        this.currentUser = currentUser;
         initComp();
         buildGui();
         registerListener();
@@ -49,7 +53,8 @@ public class PanelAddDebt extends JPanel implements ActionListener, KeyListener 
         amount = new JTextField(25);
         cancel = new JButton("Cancel");
         save = new JButton("Save");
-        ModelUser mu = new ModelUser();
+        mu = new ModelUser();
+        totalUser = mu.getTotalUser();
         from = new JComboBox(mu.getUser());
         to = new JComboBox(mu.getUser());
         calendar = new JCalendar();
@@ -80,10 +85,52 @@ public class PanelAddDebt extends JPanel implements ActionListener, KeyListener 
         amount.addKeyListener(this);
         cancel.addActionListener(this);
         save.addActionListener(this);
+        from.addActionListener(this);
+        to.addActionListener(this);
+    }
+
+    public int getIndexUser() {
+        indexUser = 0;
+        for (String a : mu.getUser()) {
+            if (a.equalsIgnoreCase(currentUser.getUsername())) {
+                return indexUser;
+            } else {
+                indexUser++;
+            }
+        }
+        return -1;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource().equals(from)) {
+            if (from.getSelectedIndex() == getIndexUser()) {
+                if (from.getSelectedIndex() == to.getSelectedIndex()) {
+                    if (getIndexUser() + 1 > totalUser) {
+                        to.setSelectedIndex(getIndexUser() - 1);
+                    } else {
+                        to.setSelectedIndex(getIndexUser() + 1);
+                    }
+                }
+            } else {
+                to.setSelectedIndex(getIndexUser());
+            }
+        }
+
+        if (e.getSource().equals(to)) {
+            if (to.getSelectedIndex() == getIndexUser()) {
+                if (from.getSelectedIndex() == to.getSelectedIndex()) {
+                    if (getIndexUser() + 1 > totalUser) {
+                        from.setSelectedIndex(getIndexUser() - 1);
+                    } else {
+                        from.setSelectedIndex(getIndexUser() + 1);
+                    }
+                }
+            } else {
+                from.setSelectedIndex(getIndexUser());
+            }
+        }
+
         if (e.getSource().equals(save)) {
             DataDebt dd = new DataDebt();
             dd.setTanggal(calendar.getDate());

@@ -21,11 +21,10 @@ import javax.swing.JPanel;
  *
  * @author User
  */
-public class MainFrame extends JFrame implements ActionListener, ListenerLogin, ListenerRegister, ListenerMainMenu, ListenerMainIncome, ListenerMainExpenditure, ListenerMainBudget, ListenerMainDebt, ListenerIncome, ListenerExpenditure, ListenerBudget, ListenerDebt {
+public class MainFrame extends JFrame implements ActionListener, ListenerHome, ListenerLogin, ListenerRegister, ListenerMainMenu, ListenerMainIncome, ListenerMainExpenditure, ListenerMainBudget, ListenerMainDebt, ListenerIncome, ListenerExpenditure, ListenerBudget, ListenerDebt {
 
-    private JMenuBar registerMB, homeMB, defaultMB;
-    private JMenuItem back, backReg, mainMenu, logout, logoutHome;
-    private Vector<JPanel> historyPanel = new Vector<JPanel>();
+    private JMenuBar registerLoginMB, homeMB, defaultMB;
+    private JMenuItem back, mainMenu, logout, logoutHome;
     private DataUser currentUser;
     private String month;
 
@@ -58,11 +57,11 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
         this.setSize(new Dimension(400, 300));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("ME Budget");
-//        this.setContentPane(new PanelAddExpenditure());
+//        this.setContentPane(new PanelHome());
         this.setJMenuBar(new JMenuBar());
-        PanelLogin pl = new PanelLogin();
-        this.setContentPane(pl);
-        pl.addLoginListener(this);
+        PanelHome ph = new PanelHome();
+        this.setContentPane(ph);
+        ph.addListenerHome(this);
         this.pack();
         this.setVisible(true);
     }
@@ -100,7 +99,6 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
 
     public void registerListener() {
         back.addActionListener(this);
-        backReg.addActionListener(this);
         mainMenu.addActionListener(this);
         logout.addActionListener(this);
         logoutHome.addActionListener(this);
@@ -108,29 +106,27 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
 
     public void buildMenu() {
         back = new JMenuItem("Back");
-        backReg = new JMenuItem("Back");
         mainMenu = new JMenuItem("Main Menu");
         logout = new JMenuItem("Logout");
         logoutHome = new JMenuItem("Logout");
 
-        registerMB = new JMenuBar();
-        registerMB.add(backReg);
+        registerLoginMB = new JMenuBar();
+        registerLoginMB.add(back);
 
         homeMB = new JMenuBar();
         homeMB.add(logoutHome);
 
         defaultMB = new JMenuBar();
-        defaultMB.add(back);
         defaultMB.add(mainMenu);
         defaultMB.add(logout);
     }
 
     public void changePanel(JPanel panel) {
         this.setVisible(false);
+        this.setJMenuBar(defaultMB);
         this.setContentPane(panel);
         this.pack();
         this.setVisible(true);
-        this.setJMenuBar(defaultMB);
     }
 
     //START ACTION LISTENER
@@ -142,19 +138,33 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
             this.setJMenuBar(homeMB);
         }
 
-        if (e.getSource().equals(logout) || e.getSource().equals(logoutHome)) {
+        if (e.getSource().equals(logout) || e.getSource().equals(logoutHome) || e.getSource().equals(back)) {
             currentUser = null;
-            PanelLogin pl = new PanelLogin();
-            pl.addLoginListener(this);
-            changePanel(pl);
+            PanelHome ph = new PanelHome();
+            ph.addListenerHome(this);
+            changePanel(ph);
             this.setJMenuBar(new JMenuBar());
-        }
-
-        if (e.getSource().equals(back)) {
-
         }
     }
     //END ACTION LISTENER
+
+    //START LISTENER HOME
+    @Override
+    public void register() {
+        PanelRegister pr = new PanelRegister();
+        pr.addListenerRegister(this);
+        changePanel(pr);
+        this.setJMenuBar(registerLoginMB);
+    }
+
+    @Override
+    public void login() {
+        PanelLogin pl = new PanelLogin();
+        pl.addListenerLogin(this);
+        changePanel(pl);
+        this.setJMenuBar(registerLoginMB);
+    }
+    // END LISTENER HOME
 
     //START LISTENER LOGIN
     @Override
@@ -170,14 +180,6 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
         changePanel(pmm);
         this.setJMenuBar(homeMB);
     }
-
-    @Override
-    public void register() {
-        PanelRegister pr = new PanelRegister();
-        pr.addListenerRegister(this);
-        changePanel(pr);
-        this.setJMenuBar(registerMB);
-    }
     //END LISTENER LOGIN
 
     //START LISTENER REGISTER
@@ -191,7 +193,7 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
     public void registerSucceed(DataUser user) {
         mu.registerUser(user);
         PanelLogin pl = new PanelLogin();
-        pl.addLoginListener(this);
+        pl.addListenerLogin(this);
         changePanel(pl);
         this.setJMenuBar(new JMenuBar());
     }
@@ -301,7 +303,7 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
     //START LISTENER MAIN DEBT
     @Override
     public void addDebt() {
-        PanelAddDebt pad = new PanelAddDebt();
+        PanelAddDebt pad = new PanelAddDebt(currentUser);
         pad.addListenerDebt(this);
         changePanel(pad);
     }
@@ -456,5 +458,5 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
         initMainDebt();
         changePanel(pmd);
     }
-    //END LISTENER DEBT
+    //END LISTENER DEBT    
 }

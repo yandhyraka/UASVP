@@ -9,9 +9,9 @@ package uasvp;
  *
  * @author User
  */
-public interface ListenerLogin {
+public interface ListenerHome {
 
-    public DataUser attemptLogin(String username, String password);
+    public void login();
 
-    public void loginSucceed(DataUser user);
+    public void register();
 }

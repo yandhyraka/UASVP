@@ -50,9 +50,9 @@ public class PanelMainIncome extends JPanel implements ActionListener {
     }
 
     public void buildGui() {
-        this.setPreferredSize(new Dimension(320, 250));
+        this.setPreferredSize(new Dimension(320, 230));
         String column = "20dlu, 65dlu, 10dlu, 65dlu, 10dlu";
-        String row = "15dlu, pref, pref, 50dlu, pref, 10dlu, pref, 10dlu";
+        String row = "20dlu, pref, pref, 30dlu, pref, 10dlu, pref, 10dlu";
         FormLayout layout = new FormLayout(column, row);
         this.setLayout(layout);
         CellConstraints c = new CellConstraints();

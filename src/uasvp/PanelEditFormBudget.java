@@ -58,7 +58,7 @@ public class PanelEditFormBudget extends JPanel implements ActionListener, KeyLi
     }
 
     public void buildGui() {
-        this.setPreferredSize(new Dimension(325, 290));
+        this.setPreferredSize(new Dimension(315, 260));
         String column = "20dlu, pref, 10dlu, 10dlu, 5dlu, 10dlu, 5dlu, 10dlu, 10dlu, 5dlu, 42dlu, 10dlu";
         String row = "15dlu, pref, 15dlu, pref, 10dlu, pref, 10dlu, pref, 10dlu, pref, 10dlu";
         FormLayout layout = new FormLayout(column, row);

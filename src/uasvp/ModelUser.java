@@ -23,6 +23,14 @@ public class ModelUser {
         return user;
     }
 
+    public int getTotalUser() {
+        int total = 0;
+        for (DataUser dc : su.getUsers()) {
+            total++;
+        }
+        return total;
+    }
+
     public boolean checkRegister(String username) {
         Vector<DataUser> users = su.getUsers();
 
