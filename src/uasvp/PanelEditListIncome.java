@@ -115,9 +115,11 @@ public class PanelEditListIncome extends JPanel implements ActionListener, KeyLi
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getSource().equals(search)) {
-            tabel.setModel(listener.searchDefaultIncome());
-        } else {
-            tabel.setModel(listener.searchKeywordIncome(search.getText()));
+            if (search.getText().equalsIgnoreCase("")) {
+                tabel.setModel(listener.searchDefaultIncome());
+            } else {
+                tabel.setModel(listener.searchKeywordIncome(search.getText()));
+            }
         }
     }
 }
