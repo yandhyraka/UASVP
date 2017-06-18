@@ -88,7 +88,7 @@ public class PanelEditListBudget extends JPanel implements TableModelListener, L
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(select)) {
             ModelBudget mb = (ModelBudget) tabel.getModel();
-            Object[] temp = mb.getRow(tabel.getSelectedRow());
+            Object[] temp = mb.getRow(tabel.convertRowIndexToModel(tabel.getSelectedRow()));
             listener.selectBudget(temp);
         }
         if (e.getSource().equals(cancel)) {

@@ -88,7 +88,7 @@ public class PanelDeleteBudget extends JPanel implements TableModelListener, Lis
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(select)) {
             ModelBudget mb = (ModelBudget) tabel.getModel();
-            Object[] temp = mb.getRow(tabel.getSelectedRow());
+            Object[] temp = mb.getRow(tabel.convertRowIndexToModel(tabel.getSelectedRow()));
             int id = Integer.parseInt(String.valueOf(temp[5]));
             listener.deleteBudget(id);
         }

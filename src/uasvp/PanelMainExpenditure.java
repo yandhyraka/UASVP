@@ -24,12 +24,16 @@ public class PanelMainExpenditure extends JPanel implements ActionListener {
     private JLabel title, balance;
     private JButton add, edit, delete;
     private ListenerMainExpenditure listener;
+    private ModelExpenditure me;
+    private String month;
 
     public void addListenerMainExpenditure(ListenerMainExpenditure listener) {
         this.listener = listener;
     }
 
-    public PanelMainExpenditure() {
+    public PanelMainExpenditure(String month, ModelExpenditure me) {
+        this.me = me;
+        this.month = month;
         initComp();
         buildGui();
         registerListener();
@@ -38,7 +42,7 @@ public class PanelMainExpenditure extends JPanel implements ActionListener {
     public void initComp() {
         title = new JLabel("Your expenditure this month");
         title.setFont(new Font("Arial", Font.BOLD, 16));
-        balance = new JLabel("Rp 000.000.000");
+        balance = new JLabel("Rp " + me.getThisMonthExpenditure(month));
         balance.setFont(new Font("Arial", Font.BOLD, 28));
         add = new JButton("Add Expenditure");
         edit = new JButton("Edit");

@@ -17,9 +17,10 @@ public class ModelIncome extends AbstractTableModel {
 
     private String[] columnNames = {"Date", "Description", "Amount"};
     private Class<?>[] columnClasses = {String.class, String.class, Integer.class};
-    ServiceIncome si = new ServiceIncome();
+    private ServiceIncome si = new ServiceIncome();
     private Vector<DataIncome> data;
     private Vector<Object[]> rows;
+    private int totalIncome;
 
     public ModelIncome(DataUser user) {
         data = si.getIncome(user);
@@ -33,6 +34,16 @@ public class ModelIncome extends AbstractTableModel {
             arow[3] = a.getId();
             rows.add(arow);
         }
+    }
+
+    public int getThisMonthIncome(String month) {
+        totalIncome = 0;
+        for (DataIncome a : data) {
+            if (month.equalsIgnoreCase(new SimpleDateFormat("MMMM").format(a.getTanggal()))) {
+                totalIncome = totalIncome + a.getJumlah();
+            }
+        }
+        return totalIncome;
     }
 
     public Vector<DataIncome> getIncome(DataUser user) {

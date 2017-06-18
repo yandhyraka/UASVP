@@ -89,7 +89,7 @@ public class PanelDeleteExpenditure extends JPanel implements TableModelListener
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(select)) {
             ModelExpenditure me = (ModelExpenditure) tabel.getModel();
-            Object[] temp = me.getRow(tabel.getSelectedRow());
+            Object[] temp = me.getRow(tabel.convertRowIndexToModel(tabel.getSelectedRow()));
             int id = Integer.parseInt(String.valueOf(temp[5]));
             listener.deleteExpenditure(id);
         }

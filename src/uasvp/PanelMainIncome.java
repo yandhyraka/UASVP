@@ -24,12 +24,16 @@ public class PanelMainIncome extends JPanel implements ActionListener {
     private JLabel title, balance;
     private JButton add, edit, delete;
     private ListenerMainIncome listener;
+    private ModelIncome mi;
+    private String month;
 
     public void addListenerMainIncome(ListenerMainIncome listener) {
         this.listener = listener;
     }
 
-    public PanelMainIncome() {
+    public PanelMainIncome(String month, ModelIncome mi) {
+        this.mi = mi;
+        this.month = month;
         initComp();
         buildGui();
         registerListener();
@@ -38,7 +42,7 @@ public class PanelMainIncome extends JPanel implements ActionListener {
     public void initComp() {
         title = new JLabel("Your income this month");
         title.setFont(new Font("Arial", Font.BOLD, 16));
-        balance = new JLabel("Rp 000.000.000");
+        balance = new JLabel("Rp " + mi.getThisMonthIncome(month));
         balance.setFont(new Font("Arial", Font.BOLD, 28));
         add = new JButton("Add Income");
         edit = new JButton("Edit");

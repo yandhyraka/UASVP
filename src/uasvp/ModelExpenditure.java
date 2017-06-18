@@ -17,10 +17,11 @@ public class ModelExpenditure extends AbstractTableModel {
 
     private String[] columnNames = {"Date", "Description", "Amount", "Category"};
     private Class<?>[] columnClasses = {String.class, String.class, Integer.class, String.class};
-    ServiceExpenditure se = new ServiceExpenditure();
-    ServiceCategory sc = new ServiceCategory();
+    private ServiceExpenditure se = new ServiceExpenditure();
+    private ServiceCategory sc = new ServiceCategory();
     private Vector<DataExpenditure> data;
     private Vector<Object[]> rows;
+    private int totalExpenditure;
 
     public ModelExpenditure(DataUser user) {
         data = se.getExpenditure(user);
@@ -34,8 +35,18 @@ public class ModelExpenditure extends AbstractTableModel {
             arow[3] = sc.getCategoryById(a.getIdKategori()).getNama();
             arow[4] = sc.getCategoryById(a.getIdKategori()).getId();
             arow[5] = a.getId();
-            rows.add(arow);
+            rows.add(arow);            
         }
+    }
+
+    public int getThisMonthExpenditure(String month) {
+        totalExpenditure = 0;
+        for (DataExpenditure a : data) {
+            if (month.equalsIgnoreCase(new SimpleDateFormat("MMMM").format(a.getTanggal()))) {
+                totalExpenditure = totalExpenditure + a.getJumlah();
+            }
+        }
+        return totalExpenditure;
     }
 
     public Vector<DataExpenditure> getExpenditure(DataUser user) {

@@ -3,6 +3,8 @@ package uasvp;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -25,8 +27,32 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
     private JMenuItem back, backReg, mainMenu, logout, logoutHome;
     private Vector<JPanel> historyPanel = new Vector<JPanel>();
     private DataUser currentUser;
+    private String month;
+
+    private PanelMainBudget pmb;
+    private PanelMainDebt pmd;
+    private PanelMainExpenditure pme;
+    private PanelMainIncome pmi;
+    private PanelMainMenu pmm;
+
+    private ModelBudget mb;
+    private ModelDebt md;
+    private ModelExpenditure me;
+    private ModelIncome mi;
+    private ModelMainMenu mmm;
+    private ModelUser mu;
+
+    private static MainFrame m;
+
+    public static void main(String[] args) {
+        m = new MainFrame();
+        m.init();
+    }
 
     public void init() {//jalankan frame
+        month = new SimpleDateFormat("MMMM").format(Calendar.getInstance().getTime());
+        mu = new ModelUser();
+
         buildMenu();
         registerListener();
         this.setSize(new Dimension(400, 300));
@@ -41,9 +67,35 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
         this.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        MainFrame m = new MainFrame();
-        m.init();
+    public void initMainBudget() {
+        mb = new ModelBudget(currentUser);
+        me = new ModelExpenditure(currentUser);
+        pmb = new PanelMainBudget(month, mb, me);
+        pmb.addListenerMainBudget(this);
+    }
+
+    public void initMainDebt() {
+        md = new ModelDebt(currentUser);
+        pmd = new PanelMainDebt(currentUser);
+        pmd.addListenerMainDebt(this);
+    }
+
+    public void initMainExpenditure() {
+        me = new ModelExpenditure(currentUser);
+        pme = new PanelMainExpenditure(month, me);
+        pme.addListenerMainExpenditure(this);
+    }
+
+    public void initMainIncome() {
+        mi = new ModelIncome(currentUser);
+        pmi = new PanelMainIncome(month, mi);
+        pmi.addListenerMainIncome(this);
+    }
+
+    public void initMainMenu() {
+        mmm = new ModelMainMenu(currentUser);
+        pmm = new PanelMainMenu(mmm);
+        pmm.addListenerMainMenu(this);
     }
 
     public void registerListener() {
@@ -85,9 +137,8 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(mainMenu)) {
-            PanelMainMenu mm = new PanelMainMenu();
-            mm.addListenerMainMenu(this);
-            changePanel(mm);
+            initMainMenu();
+            changePanel(pmm);
             this.setJMenuBar(homeMB);
         }
 
@@ -108,7 +159,6 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
     //START LISTENER LOGIN
     @Override
     public DataUser attemptLogin(String username, String password) {
-        ModelUser mu = new ModelUser();
         DataUser du = mu.checkLogin(username, password);
         return du;
     }
@@ -116,9 +166,8 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
     @Override
     public void loginSucceed(DataUser user) {
         currentUser = user;
-        PanelMainMenu mm = new PanelMainMenu();
-        mm.addListenerMainMenu(this);
-        changePanel(mm);
+        initMainMenu();
+        changePanel(pmm);
         this.setJMenuBar(homeMB);
     }
 
@@ -134,14 +183,12 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
     //START LISTENER REGISTER
     @Override
     public boolean checkUsername(String username) {
-        ModelUser mu = new ModelUser();
         boolean b = mu.checkRegister(username);
         return b;
     }
 
     @Override
     public void registerSucceed(DataUser user) {
-        ModelUser mu = new ModelUser();
         mu.registerUser(user);
         PanelLogin pl = new PanelLogin();
         pl.addLoginListener(this);
@@ -153,29 +200,25 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
     //START LISTENER MAIN MENU
     @Override
     public void income() {
-        PanelMainIncome pmi = new PanelMainIncome();
-        pmi.addListenerMainIncome(this);
+        initMainIncome();
         changePanel(pmi);
     }
 
     @Override
     public void expenditure() {
-        PanelMainExpenditure pme = new PanelMainExpenditure();
-        pme.addListenerMainExpenditure(this);
+        initMainExpenditure();
         changePanel(pme);
     }
 
     @Override
     public void debt() {
-        PanelMainDebt pmd = new PanelMainDebt(currentUser);
-        pmd.addListenerMainDebt(this);
+        initMainDebt();
         changePanel(pmd);
     }
 
     @Override
     public void budget() {
-        PanelMainBudget pmb = new PanelMainBudget();
-        pmb.addListenerMainBudget(this);
+        initMainBudget();
         changePanel(pmb);
     }
 
@@ -279,18 +322,14 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
             peli.addListenerIncome(this);
             changePanel(peli);
         } else {
-            PanelMainIncome pmi = new PanelMainIncome();
-            pmi.addListenerMainIncome(this);
             changePanel(pmi);
         }
     }
 
     @Override
     public void addIncome(DataIncome di) {
-        ModelIncome mi = new ModelIncome(currentUser);
         mi.inputIncome(currentUser, di);
-        PanelMainIncome pmi = new PanelMainIncome();
-        pmi.addListenerMainIncome(this);
+        initMainIncome();
         changePanel(pmi);
     }
 
@@ -303,19 +342,15 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
 
     @Override
     public void editIncome(DataIncome di) {
-        ModelIncome mi = new ModelIncome(currentUser);
         mi.editIncome(di);
-        PanelMainIncome pmi = new PanelMainIncome();
-        pmi.addListenerMainIncome(this);
+        initMainIncome();
         changePanel(pmi);
     }
 
     @Override
     public void deleteIncome(int id) {
-        ModelIncome mi = new ModelIncome(currentUser);
         mi.deleteIncome(id);
-        PanelMainIncome pmi = new PanelMainIncome();
-        pmi.addListenerMainIncome(this);
+        initMainIncome();
         changePanel(pmi);
     }
     //END LISTENER INCOME
@@ -328,18 +363,14 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
             pele.addListenerExpenditure(this);
             changePanel(pele);
         } else {
-            PanelMainExpenditure pme = new PanelMainExpenditure();
-            pme.addListenerMainExpenditure(this);
             changePanel(pme);
         }
     }
 
     @Override
     public void addExpenditure(DataExpenditure de) {
-        ModelExpenditure me = new ModelExpenditure(currentUser);
         me.inputExpenditure(currentUser, de);
-        PanelMainExpenditure pme = new PanelMainExpenditure();
-        pme.addListenerMainExpenditure(this);
+        initMainExpenditure();
         changePanel(pme);
     }
 
@@ -352,19 +383,15 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
 
     @Override
     public void editExpenditure(DataExpenditure de) {
-        ModelExpenditure me = new ModelExpenditure(currentUser);
         me.editExpenditure(de);
-        PanelMainExpenditure pme = new PanelMainExpenditure();
-        pme.addListenerMainExpenditure(this);
+        initMainExpenditure();
         changePanel(pme);
     }
 
     @Override
     public void deleteExpenditure(int id) {
-        ModelExpenditure me = new ModelExpenditure(currentUser);
         me.deleteExpenditure(id);
-        PanelMainExpenditure pme = new PanelMainExpenditure();
-        pme.addListenerMainExpenditure(this);
+        initMainExpenditure();
         changePanel(pme);
     }
     //END LISTENER EXPENDITURE
@@ -377,18 +404,14 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
             pelb.addListenerBudget(this);
             changePanel(pelb);
         } else {
-            PanelMainBudget pmb = new PanelMainBudget();
-            pmb.addListenerMainBudget(this);
             changePanel(pmb);
         }
     }
 
     @Override
     public void addBudget(DataBudget db) {
-        ModelBudget mb = new ModelBudget(currentUser);
         mb.inputBudget(currentUser, db);
-        PanelMainBudget pmb = new PanelMainBudget();
-        pmb.addListenerMainBudget(this);
+        initMainBudget();
         changePanel(pmb);
     }
 
@@ -401,19 +424,15 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
 
     @Override
     public void editBudget(DataBudget db) {
-        ModelBudget mb = new ModelBudget(currentUser);
         mb.editBudget(db);
-        PanelMainBudget pmb = new PanelMainBudget();
-        pmb.addListenerMainBudget(this);
+        initMainBudget();
         changePanel(pmb);
     }
 
     @Override
     public void deleteBudget(int id) {
-        ModelBudget mb = new ModelBudget(currentUser);
         mb.deleteBudget(id);
-        PanelMainBudget pmb = new PanelMainBudget();
-        pmb.addListenerMainBudget(this);
+        initMainBudget();
         changePanel(pmb);
     }
     //END LISTENER BUDGET
@@ -421,26 +440,20 @@ public class MainFrame extends JFrame implements ActionListener, ListenerLogin, 
     //START LISTENER DEBT
     @Override
     public void cancelDebt(JPanel panel) {
-        PanelMainDebt pmd = new PanelMainDebt(currentUser);
-        pmd.addListenerMainDebt(this);
         changePanel(pmd);
     }
 
     @Override
     public void addDebt(DataDebt dd) {
-        ModelDebt mb = new ModelDebt(currentUser);
-        mb.inputDebt(dd);
-        PanelMainDebt pmd = new PanelMainDebt(currentUser);
-        pmd.addListenerMainDebt(this);
+        md.inputDebt(dd);
+        initMainDebt();
         changePanel(pmd);
     }
 
     @Override
     public void editDebt(DataDebt dd) {
-        ModelDebt mb = new ModelDebt(currentUser);
-        mb.editDebt(dd);
-        PanelMainDebt pmd = new PanelMainDebt(currentUser);
-        pmd.addListenerMainDebt(this);
+        md.editDebt(dd);
+        initMainDebt();
         changePanel(pmd);
     }
     //END LISTENER DEBT

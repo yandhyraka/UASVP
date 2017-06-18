@@ -88,7 +88,7 @@ public class PanelDeleteIncome extends JPanel implements TableModelListener, Lis
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(select)) {
             ModelIncome mi = (ModelIncome) tabel.getModel();
-            Object[] temp = mi.getRow(tabel.getSelectedRow());
+            Object[] temp = mi.getRow(tabel.convertRowIndexToModel(tabel.getSelectedRow()));
             int id =Integer.parseInt(String.valueOf(temp[3]));
             listener.deleteIncome(id);
         }

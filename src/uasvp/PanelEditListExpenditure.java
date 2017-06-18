@@ -89,7 +89,7 @@ public class PanelEditListExpenditure extends JPanel implements TableModelListen
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(select)) {
             ModelExpenditure me = (ModelExpenditure) tabel.getModel();
-            Object[] temp = me.getRow(tabel.getSelectedRow());
+            Object[] temp = me.getRow(tabel.convertRowIndexToModel(tabel.getSelectedRow()));
             listener.selectExpenditure(temp);
         }
         if (e.getSource().equals(cancel)) {

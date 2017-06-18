@@ -25,12 +25,14 @@ public class PanelMainMenu extends JPanel implements ActionListener {
     private JLabel title, balance;
     private JButton income, expenditure, debt, budget, history;
     private ListenerMainMenu listener;
+    private ModelMainMenu mmm;
 
     public void addListenerMainMenu(ListenerMainMenu listener) {
         this.listener = listener;
     }
 
-    public PanelMainMenu() {
+    public PanelMainMenu(ModelMainMenu mmm) {
+        this.mmm = mmm;
         initComp();
         buildGui();
         registerListener();
@@ -39,7 +41,7 @@ public class PanelMainMenu extends JPanel implements ActionListener {
     public void initComp() {
         title = new JLabel("Balance");
         title.setFont(new Font("Arial", Font.BOLD, 28));
-        balance = new JLabel("Rp 000.000.000");
+        balance = new JLabel("Rp " + mmm.getBalance());
         balance.setFont(new Font("Arial", Font.BOLD, 28));
         income = new JButton("Income");
         expenditure = new JButton("Expenditure");
@@ -79,19 +81,19 @@ public class PanelMainMenu extends JPanel implements ActionListener {
         if (e.getSource().equals(expenditure)) {
             listener.expenditure();
         }
-        
+
         if (e.getSource().equals(income)) {
             listener.income();
         }
-        
+
         if (e.getSource().equals(debt)) {
             listener.debt();
         }
-        
+
         if (e.getSource().equals(budget)) {
             listener.budget();
         }
-        
+
         if (e.getSource().equals(history)) {
             listener.transactionHistory();
         }

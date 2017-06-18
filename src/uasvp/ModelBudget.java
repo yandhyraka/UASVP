@@ -17,10 +17,11 @@ public class ModelBudget extends AbstractTableModel {
 
     private String[] columnNames = {"Month", "Amount", "Category"};
     private Class<?>[] columnClasses = {String.class, Integer.class, String.class};
-    ServiceBudget sb = new ServiceBudget();
-    ServiceCategory sc = new ServiceCategory();
+    private ServiceBudget sb = new ServiceBudget();
+    private ServiceCategory sc = new ServiceCategory();
     private Vector<DataBudget> data;
     private Vector<Object[]> rows;
+    private int totalBudget;
 
     public ModelBudget(DataUser user) {
         data = sb.getBudget(user);
@@ -36,8 +37,18 @@ public class ModelBudget extends AbstractTableModel {
             rows.add(arow);
         }
     }
-    
-     public Vector<DataBudget> getBudget(DataUser user) {
+
+    public int getThisMonthBudget(String month) {
+        totalBudget = 0;
+        for (DataBudget a : data) {
+            if (month.equalsIgnoreCase(a.getBulan())) {
+                totalBudget = totalBudget + a.getJumlah();
+            }
+        }
+        return totalBudget;
+    }
+
+    public Vector<DataBudget> getBudget(DataUser user) {
         return sb.getBudget(user);
     }
 

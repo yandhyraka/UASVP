@@ -93,7 +93,7 @@ public class PanelMainDebt extends JPanel implements TableModelListener, ListSel
         }
         if (e.getSource().equals(editButton)) {
             ModelDebt  md = (ModelDebt) tabel.getModel();
-            Object[] temp = md.getRow(tabel.getSelectedRow());
+            Object[] temp = md.getRow(tabel.convertRowIndexToModel(tabel.getSelectedRow()));
             listener.editDebt(temp);
         }
     }
