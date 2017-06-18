@@ -31,8 +31,15 @@ public class PanelHistory extends JPanel implements KeyListener {
     private JTable tabel;
     private JScrollPane tablePane;
     private DataUser currentUser;
+    private ListenerHistory listener;
+    private ModelHistory mh;
 
-    public PanelHistory(DataUser currentUser) {
+    public void addListenerHistory(ListenerHistory listener) {
+        this.listener = listener;
+    }
+
+    public PanelHistory(DataUser currentUser, ModelHistory mh) {
+        this.mh = mh;
         this.currentUser = currentUser;
         initComp();
         buildGui();
@@ -43,7 +50,6 @@ public class PanelHistory extends JPanel implements KeyListener {
         title = new JLabel("History");
         title.setFont(new Font("Arial", Font.BOLD, 28));
         search = new JTextField("Search", 25);
-        ModelHistory mh = new ModelHistory(currentUser);
         tabel = new JTable();
         tabel.setModel(mh);
         tabel.setAutoCreateRowSorter(true);
@@ -87,12 +93,9 @@ public class PanelHistory extends JPanel implements KeyListener {
     public void keyReleased(KeyEvent e) {
         if (e.getSource().equals(search)) {
             if (search.getText().equalsIgnoreCase("")) {
-                ModelHistory mh = new ModelHistory(currentUser);
-                tabel.setModel(mh);
+                tabel.setModel(listener.searchDefaultHistory());
             } else {
-                ModelHistory mh = new ModelHistory(currentUser);
-                mh.searchHistory(search.getText());
-                tabel.setModel(mh);
+                tabel.setModel(listener.searchKeywordHistory(search.getText()));
             }
         }
     }

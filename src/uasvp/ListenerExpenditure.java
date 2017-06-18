@@ -16,10 +16,14 @@ public interface ListenerExpenditure {
     public void cancelExpenditure(JPanel panel);
 
     public void addExpenditure(DataExpenditure de);
-    
+
     public void selectExpenditure(Object[] expend);
 
     public void editExpenditure(DataExpenditure de);
 
     public void deleteExpenditure(int id);
+
+    public ModelExpenditure searchDefaultExpenditure();
+
+    public ModelExpenditure searchKeywordExpenditure(String keyword);
 }

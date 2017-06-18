@@ -26,7 +26,7 @@ import javax.swing.event.TableModelListener;
  *
  * @author User
  */
-public class PanelEditListBudget extends JPanel implements TableModelListener, ListSelectionListener, ActionListener {
+public class PanelEditListBudget extends JPanel implements ActionListener {
 
     private JLabel title;
     private JTable tabel;
@@ -34,13 +34,15 @@ public class PanelEditListBudget extends JPanel implements TableModelListener, L
     private JButton cancel, select;
     private DataUser currentUser;
     private ListenerBudget listener;
+    private ModelBudget mb;
 
     public void addListenerBudget(ListenerBudget listener) {
         this.listener = listener;
     }
 
-    public PanelEditListBudget(DataUser currentUser) {
+    public PanelEditListBudget(DataUser currentUser, ModelBudget mb) {
         this.currentUser = currentUser;
+        this.mb = mb;
         initComp();
         buildGui();
         registerListener();
@@ -49,7 +51,6 @@ public class PanelEditListBudget extends JPanel implements TableModelListener, L
     public void initComp() {
         title = new JLabel("Edit Budget");
         title.setFont(new Font("Arial", Font.BOLD, 28));
-        ModelBudget mb = new ModelBudget(currentUser);
         tabel = new JTable();
         tabel.setModel(mb);
         tabel.setAutoCreateRowSorter(true);
@@ -94,15 +95,5 @@ public class PanelEditListBudget extends JPanel implements TableModelListener, L
         if (e.getSource().equals(cancel)) {
             listener.cancelBudget(this);
         }
-    }
-
-    @Override
-    public void tableChanged(TableModelEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void valueChanged(ListSelectionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -26,7 +26,7 @@ import javax.swing.event.TableModelListener;
  *
  * @author User
  */
-public class PanelMainDebt extends JPanel implements TableModelListener, ListSelectionListener, ActionListener {
+public class PanelMainDebt extends JPanel implements ActionListener {
 
     private JLabel title;
     private JTable tabel;
@@ -34,12 +34,14 @@ public class PanelMainDebt extends JPanel implements TableModelListener, ListSel
     private JButton newButton, editButton, deleteButton;
     private DataUser currentUser;
     private ListenerMainDebt listener;
+    private ModelDebt md;
 
     public void addListenerMainDebt(ListenerMainDebt listener) {
         this.listener = listener;
     }
 
-    public PanelMainDebt(DataUser currentUser) {
+    public PanelMainDebt(DataUser currentUser, ModelDebt md) {
+        this.md = md;
         this.currentUser = currentUser;
         initComp();
         buildGui();
@@ -49,7 +51,6 @@ public class PanelMainDebt extends JPanel implements TableModelListener, ListSel
     public void initComp() {
         title = new JLabel("Debt");
         title.setFont(new Font("Arial", Font.BOLD, 28));
-        ModelDebt md = new ModelDebt(currentUser);
         tabel = new JTable();
         tabel.setModel(md);
         tabel.setAutoCreateRowSorter(true);
@@ -105,15 +106,5 @@ public class PanelMainDebt extends JPanel implements TableModelListener, ListSel
             int id = Integer.parseInt(String.valueOf(temp[5]));
             listener.deleteDebt(id);
         }
-    }
-
-    @Override
-    public void tableChanged(TableModelEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void valueChanged(ListSelectionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

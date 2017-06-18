@@ -32,12 +32,14 @@ public class PanelAddExpenditure extends JPanel implements ActionListener, KeyLi
     private JComboBox category;
     private JCalendar calendar;
     private ListenerExpenditure listener;
+    private ModelCategory mc;
 
     public void addListenerExpenditure(ListenerExpenditure listener) {
         this.listener = listener;
     }
 
-    public PanelAddExpenditure() {
+    public PanelAddExpenditure(ModelCategory mc) {
+        this.mc = mc;
         initComp();
         buildGui();
         registerListener();
@@ -50,7 +52,6 @@ public class PanelAddExpenditure extends JPanel implements ActionListener, KeyLi
         amount = new JTextField(25);
         cancel = new JButton("Cancel");
         save = new JButton("Save");
-        ModelCategory mc = new ModelCategory();
         category = new JComboBox(mc.getCategory());
         calendar = new JCalendar();
     }

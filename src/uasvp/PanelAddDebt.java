@@ -40,7 +40,8 @@ public class PanelAddDebt extends JPanel implements ActionListener, KeyListener 
         this.listener = listener;
     }
 
-    public PanelAddDebt(DataUser currentUser) {
+    public PanelAddDebt(DataUser currentUser, ModelUser mu) {
+        this.mu = mu;
         this.currentUser = currentUser;
         initComp();
         buildGui();
@@ -53,7 +54,6 @@ public class PanelAddDebt extends JPanel implements ActionListener, KeyListener 
         amount = new JTextField(25);
         cancel = new JButton("Cancel");
         save = new JButton("Save");
-        mu = new ModelUser();
         totalUser = mu.getTotalUser();
         from = new JComboBox(mu.getUser());
         to = new JComboBox(mu.getUser());

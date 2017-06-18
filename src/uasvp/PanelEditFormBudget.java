@@ -32,13 +32,15 @@ public class PanelEditFormBudget extends JPanel implements ActionListener, KeyLi
     private String[] bulan = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     private Object[] budget;
     private ListenerBudget listener;
+    private ModelCategory mc;
 
     public void addListenerBudget(ListenerBudget listener) {
         this.listener = listener;
     }
 
-    public PanelEditFormBudget(Object[] budget) {
+    public PanelEditFormBudget(Object[] budget, ModelCategory mc) {
         this.budget = budget;
+        this.mc=mc;
         initComp();
         buildGui();
         registerListener();
@@ -52,7 +54,6 @@ public class PanelEditFormBudget extends JPanel implements ActionListener, KeyLi
         save = new JButton("Save");
         month = new JComboBox(bulan);
         month.setSelectedIndex(getIdBulan(String.valueOf(budget[0])));
-        ModelCategory mc = new ModelCategory();
         category = new JComboBox(mc.getCategory());
         category.setSelectedIndex(Integer.parseInt(String.valueOf(budget[3])) - 1);
     }

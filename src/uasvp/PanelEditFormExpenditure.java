@@ -39,13 +39,15 @@ public class PanelEditFormExpenditure extends JPanel implements ActionListener, 
     private JCalendar calendar;
     private Object[] expend;
     private ListenerExpenditure listener;
+    private ModelCategory mc;
 
     public void addListenerExpenditure(ListenerExpenditure listener) {
         this.listener = listener;
     }
 
-    public PanelEditFormExpenditure(Object[] expend) {
+    public PanelEditFormExpenditure(Object[] expend, ModelCategory mc) {
         this.expend = expend;
+        this.mc = mc;
         initComp();
         buildGui();
         registerListener();
@@ -58,7 +60,6 @@ public class PanelEditFormExpenditure extends JPanel implements ActionListener, 
         amount = new JTextField(String.valueOf(expend[2]), 25);
         cancel = new JButton("Cancel");
         save = new JButton("Save");
-        ModelCategory mc = new ModelCategory();
         category = new JComboBox(mc.getCategory());
         category.setSelectedIndex(Integer.parseInt(String.valueOf(expend[4])) - 1);
         calendar = new JCalendar();

@@ -16,10 +16,14 @@ public interface ListenerIncome {
     public void cancelIncome(JPanel panel);
 
     public void addIncome(DataIncome di);
-    
+
     public void selectIncome(Object[] income);
 
     public void editIncome(DataIncome di);
 
     public void deleteIncome(int id);
+
+    public ModelIncome searchDefaultIncome();
+
+    public ModelIncome searchKeywordIncome(String keyword);
 }

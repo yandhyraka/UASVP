@@ -29,14 +29,16 @@ public class PanelAddBudget extends JPanel implements ActionListener, KeyListene
     private JTextField amount;
     private JButton cancel, save;
     private JComboBox month, category;
-    private String[] bulan={"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    private String[] bulan = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    private ModelCategory mc;
     private ListenerBudget listener;
 
     public void addListenerBudget(ListenerBudget listener) {
         this.listener = listener;
     }
 
-    public PanelAddBudget() {
+    public PanelAddBudget(ModelCategory mc) {
+        this.mc = mc;
         initComp();
         buildGui();
         registerListener();
@@ -49,7 +51,6 @@ public class PanelAddBudget extends JPanel implements ActionListener, KeyListene
         cancel = new JButton("Cancel");
         save = new JButton("Save");
         month = new JComboBox(bulan);
-        ModelCategory mc = new ModelCategory();
         category = new JComboBox(mc.getCategory());
     }
 

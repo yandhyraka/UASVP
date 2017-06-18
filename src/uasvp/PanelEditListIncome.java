@@ -38,13 +38,15 @@ public class PanelEditListIncome extends JPanel implements ActionListener, KeyLi
     private JButton cancel, select;
     private DataUser currentUser;
     private ListenerIncome listener;
+    private ModelIncome mi;
 
     public void addListenerIncome(ListenerIncome listener) {
         this.listener = listener;
     }
 
-    public PanelEditListIncome(DataUser currentUser) {
+    public PanelEditListIncome(DataUser currentUser, ModelIncome mi) {
         this.currentUser = currentUser;
+        this.mi = mi;
         initComp();
         buildGui();
         registerListener();
@@ -54,7 +56,6 @@ public class PanelEditListIncome extends JPanel implements ActionListener, KeyLi
         title = new JLabel("Edit Income");
         title.setFont(new Font("Arial", Font.BOLD, 28));
         search = new JTextField("Search", 25);
-        ModelIncome mi = new ModelIncome(currentUser);
         tabel = new JTable();
         tabel.setModel(mi);
         tabel.setAutoCreateRowSorter(true);
@@ -114,14 +115,9 @@ public class PanelEditListIncome extends JPanel implements ActionListener, KeyLi
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getSource().equals(search)) {
-            if (search.getText().equalsIgnoreCase("")) {
-                ModelIncome mi = new ModelIncome(currentUser);
-                tabel.setModel(mi);
-            } else {
-                ModelIncome mi = new ModelIncome(currentUser);
-                mi.searchIncome(search.getText());
-                tabel.setModel(mi);
-            }
+            tabel.setModel(listener.searchDefaultIncome());
+        } else {
+            tabel.setModel(listener.searchKeywordIncome(search.getText()));
         }
     }
 }

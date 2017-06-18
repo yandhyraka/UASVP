@@ -44,7 +44,7 @@ public class PanelMainBudget extends JPanel implements ActionListener {
     public void initComp() {
         title = new JLabel("Your budget this month");
         title.setFont(new Font("Arial", Font.BOLD, 16));
-        balance = new JLabel("Rp " + (mb.getThisMonthBudget(month)-me.getThisMonthExpenditure(month)));
+        balance = new JLabel("Rp " + (mb.getThisMonthBudget(month) - me.getThisMonthExpenditure(month)));
         balance.setFont(new Font("Arial", Font.BOLD, 28));
         add = new JButton("Add Budget");
         edit = new JButton("Edit");

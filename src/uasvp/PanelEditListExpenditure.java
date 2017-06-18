@@ -38,13 +38,15 @@ public class PanelEditListExpenditure extends JPanel implements ActionListener, 
     private JButton cancel, select;
     private DataUser currentUser;
     private ListenerExpenditure listener;
+    private ModelExpenditure me;
 
     public void addListenerExpenditure(ListenerExpenditure listener) {
         this.listener = listener;
     }
 
-    public PanelEditListExpenditure(DataUser currentUser) {
+    public PanelEditListExpenditure(DataUser currentUser, ModelExpenditure me) {
         this.currentUser = currentUser;
+        this.me = me;
         initComp();
         buildGui();
         registerListener();
@@ -54,7 +56,6 @@ public class PanelEditListExpenditure extends JPanel implements ActionListener, 
         title = new JLabel("Edit Expenditure");
         title.setFont(new Font("Arial", Font.BOLD, 28));
         search = new JTextField("Search", 25);
-        ModelExpenditure me = new ModelExpenditure(currentUser);
         tabel = new JTable();
         tabel.setModel(me);
         tabel.setAutoCreateRowSorter(true);
@@ -116,12 +117,9 @@ public class PanelEditListExpenditure extends JPanel implements ActionListener, 
     public void keyReleased(KeyEvent e) {
         if (e.getSource().equals(search)) {
             if (search.getText().equalsIgnoreCase("")) {
-                ModelExpenditure me = new ModelExpenditure(currentUser);
-                tabel.setModel(me);
+                tabel.setModel(listener.searchDefaultExpenditure());
             } else {
-                ModelExpenditure me = new ModelExpenditure(currentUser);
-                me.searchExpenditure(search.getText());
-                tabel.setModel(me);
+                tabel.setModel(listener.searchKeywordExpenditure(search.getText()));
             }
         }
     }
