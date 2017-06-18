@@ -31,7 +31,7 @@ public class PanelMainDebt extends JPanel implements TableModelListener, ListSel
     private JLabel title;
     private JTable tabel;
     private JScrollPane tablePane;
-    private JButton newButton, editButton;
+    private JButton newButton, editButton, deleteButton;
     private DataUser currentUser;
     private ListenerMainDebt listener;
 
@@ -65,25 +65,28 @@ public class PanelMainDebt extends JPanel implements TableModelListener, ListSel
         tablePane.setPreferredSize(new Dimension(500, 150));
         newButton = new JButton("New");
         editButton = new JButton("Edit");
+        deleteButton = new JButton("Delete");
     }
 
     public void buildGui() {
-        this.setPreferredSize(new Dimension(550, 300));
+        this.setPreferredSize(new Dimension(550, 340));
         String column = "85dlu, 65dlu, 10dlu, 65dlu, 10dlu";
-        String row = "15dlu, pref, 15dlu, pref, 10dlu, pref, 10dlu";
+        String row = "15dlu, pref, 15dlu, pref, 10dlu, pref, 10dlu, pref, 10dlu";
         FormLayout layout = new FormLayout(column, row);
         this.setLayout(layout);
         CellConstraints c = new CellConstraints();
 
         this.add(title, c.xyw(2, 2, 3, "center, center"));
         this.add(tablePane, c.xyw(2, 4, 3, "center, center"));
-        this.add(newButton, c.xy(2, 6));
-        this.add(editButton, c.xy(4, 6));
+        this.add(newButton, c.xyw(2, 6, 3));
+        this.add(editButton, c.xy(2, 8));
+        this.add(deleteButton, c.xy(4, 8));
     }
 
     public void registerListener() {
         newButton.addActionListener(this);
         editButton.addActionListener(this);
+        deleteButton.addActionListener(this);
     }
 
     @Override
@@ -92,9 +95,15 @@ public class PanelMainDebt extends JPanel implements TableModelListener, ListSel
             listener.addDebt();
         }
         if (e.getSource().equals(editButton)) {
-            ModelDebt  md = (ModelDebt) tabel.getModel();
+            ModelDebt md = (ModelDebt) tabel.getModel();
             Object[] temp = md.getRow(tabel.convertRowIndexToModel(tabel.getSelectedRow()));
             listener.editDebt(temp);
+        }
+        if (e.getSource().equals(deleteButton)) {
+            ModelDebt md = (ModelDebt) tabel.getModel();
+            Object[] temp = md.getRow(tabel.convertRowIndexToModel(tabel.getSelectedRow()));
+            int id = Integer.parseInt(String.valueOf(temp[5]));
+            listener.deleteDebt(id);
         }
     }
 

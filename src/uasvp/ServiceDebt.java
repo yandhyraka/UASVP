@@ -12,9 +12,9 @@ import java.util.Vector;
  * @author User
  */
 public class ServiceDebt {
-    
-    private JDBCDaoDebt dao=new JDBCDaoDebt();
-    
+
+    private JDBCDaoDebt dao = new JDBCDaoDebt();
+
     public Vector<DataDebt> getDebt(DataUser user) {
         return dao.readByUser(user);
     }
@@ -22,8 +22,12 @@ public class ServiceDebt {
     public boolean addNewDebt(DataDebt debt) {
         return dao.insertDebt(debt);
     }
-    
+
     public boolean editSelectedDebt(DataDebt debt) {
         return dao.updateDebt(debt);
+    }
+
+    public boolean deleteSelectedDebt(int id) {
+        return dao.deleteDebt(id);
     }
 }

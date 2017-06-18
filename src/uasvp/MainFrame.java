@@ -314,6 +314,13 @@ public class MainFrame extends JFrame implements ActionListener, ListenerHome, L
         pefd.addListenerDebt(this);
         changePanel(pefd);
     }
+    
+    @Override
+    public void deleteDebt(int id) {
+        md.deleteDebt(id);
+        initMainDebt();
+        changePanel(pmd);
+    }
     //END LISTENER MAIN DEBT
 
     //START LISTENER INCOME

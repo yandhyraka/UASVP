@@ -53,6 +53,10 @@ public class ModelDebt extends AbstractTableModel {
         return sd.editSelectedDebt(debt);
     }
 
+    public boolean deleteDebt(int id) {
+        return sd.deleteSelectedDebt(id);
+    }
+
     public Object[] getRow(int row) {
         return rows.get(row);
     }

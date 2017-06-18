@@ -18,5 +18,4 @@ public interface ListenerDebt {
     public void addDebt(DataDebt dd);
 
     public void editDebt(DataDebt dd);
-
 }

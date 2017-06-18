@@ -138,4 +138,24 @@ public class JDBCDaoDebt {
             return false;
         }
     }
+    
+    public boolean deleteDebt(int id) {
+        int berhasil = 0;
+        String query = "delete from hutang where `id`=?";
+        PreparedStatement pstmt = null;
+
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, id);
+            berhasil = pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCDaoDebt.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (berhasil > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
