@@ -11,11 +11,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -26,9 +29,10 @@ import javax.swing.event.TableModelListener;
  *
  * @author User
  */
-public class PanelEditListIncome extends JPanel implements TableModelListener, ListSelectionListener, ActionListener {
+public class PanelEditListIncome extends JPanel implements ActionListener, KeyListener {
 
     private JLabel title;
+    private JTextField search;
     private JTable tabel;
     private JScrollPane tablePane;
     private JButton cancel, select;
@@ -49,6 +53,7 @@ public class PanelEditListIncome extends JPanel implements TableModelListener, L
     public void initComp() {
         title = new JLabel("Edit Income");
         title.setFont(new Font("Arial", Font.BOLD, 28));
+        search = new JTextField("Search", 25);
         ModelIncome mi = new ModelIncome(currentUser);
         tabel = new JTable();
         tabel.setModel(mi);
@@ -66,22 +71,24 @@ public class PanelEditListIncome extends JPanel implements TableModelListener, L
     }
 
     public void buildGui() {
-        this.setPreferredSize(new Dimension(390, 300));
+        this.setPreferredSize(new Dimension(390, 330));
         String column = "40dlu, 65dlu, 10dlu, 65dlu, 10dlu";
-        String row = "15dlu, pref, 15dlu, pref, 10dlu, pref, 10dlu";
+        String row = "15dlu, pref, 15dlu, pref, 10dlu, pref, 10dlu, pref, 10dlu";
         FormLayout layout = new FormLayout(column, row);
         this.setLayout(layout);
         CellConstraints c = new CellConstraints();
 
         this.add(title, c.xyw(2, 2, 3, "center, center"));
-        this.add(tablePane, c.xyw(2, 4, 3, "center, center"));
-        this.add(cancel, c.xy(2, 6));
-        this.add(select, c.xy(4, 6));
+        this.add(search, c.xyw(2, 4, 3, "center, center"));
+        this.add(tablePane, c.xyw(2, 6, 3, "center, center"));
+        this.add(cancel, c.xy(2, 8));
+        this.add(select, c.xy(4, 8));
     }
 
     public void registerListener() {
         cancel.addActionListener(this);
         select.addActionListener(this);
+        search.addKeyListener(this);
     }
 
     @Override
@@ -97,12 +104,24 @@ public class PanelEditListIncome extends JPanel implements TableModelListener, L
     }
 
     @Override
-    public void tableChanged(TableModelEvent e) {
-
+    public void keyTyped(KeyEvent e) {
     }
 
     @Override
-    public void valueChanged(ListSelectionEvent e) {
+    public void keyPressed(KeyEvent e) {
+    }
 
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if (e.getSource().equals(search)) {
+            if (search.getText().equalsIgnoreCase("")) {
+                ModelIncome mi = new ModelIncome(currentUser);
+                tabel.setModel(mi);
+            } else {
+                ModelIncome mi = new ModelIncome(currentUser);
+                mi.searchIncome(search.getText());
+                tabel.setModel(mi);
+            }
+        }
     }
 }

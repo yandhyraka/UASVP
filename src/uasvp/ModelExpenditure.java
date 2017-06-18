@@ -35,7 +35,25 @@ public class ModelExpenditure extends AbstractTableModel {
             arow[3] = sc.getCategoryById(a.getIdKategori()).getNama();
             arow[4] = sc.getCategoryById(a.getIdKategori()).getId();
             arow[5] = a.getId();
-            rows.add(arow);            
+            rows.add(arow);
+        }
+    }
+
+    public void searchExpenditure(String keyword) {
+        rows.removeAllElements();
+
+        for (DataExpenditure a : data) {
+            if (a.getKeterangan().toLowerCase().contains(keyword.toLowerCase())) {
+                Object[] arow = new Object[6];
+                String tanggal = new SimpleDateFormat("yyyy-MM-dd").format(a.getTanggal());
+                arow[0] = tanggal;
+                arow[1] = a.getKeterangan();
+                arow[2] = a.getJumlah();
+                arow[3] = sc.getCategoryById(a.getIdKategori()).getNama();
+                arow[4] = sc.getCategoryById(a.getIdKategori()).getId();
+                arow[5] = a.getId();
+                rows.add(arow);
+            }
         }
     }
 

@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /**
@@ -23,7 +24,8 @@ import javax.swing.JTextField;
 public class PanelRegister extends JPanel implements ActionListener {
 
     private JLabel title;
-    private JTextField fullname, username, password;
+    private JTextField fullname, username;
+    private JPasswordField password;
     private JButton register;
     private ListenerRegister listener;
 
@@ -42,7 +44,7 @@ public class PanelRegister extends JPanel implements ActionListener {
         title.setFont(new Font("Arial", Font.BOLD, 28));
         fullname = new JTextField(25);
         username = new JTextField(20);
-        password = new JTextField(25);
+        password = new JPasswordField(25);
         register = new JButton("Register");
     }
 
@@ -72,12 +74,12 @@ public class PanelRegister extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(register)) {
             if (listener.checkUsername(username.getText())) {
-                DataUser du=new DataUser();
+                DataUser du = new DataUser();
                 du.setNama(fullname.getText());
                 du.setUsername(username.getText());
-                du.setPassword(password.getText());
+                du.setPassword(String.valueOf(password.getPassword()));
                 listener.registerSucceed(du);
-            }else{
+            } else {
                 System.out.println("FAIL");
             }
         }

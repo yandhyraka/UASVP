@@ -36,6 +36,22 @@ public class ModelIncome extends AbstractTableModel {
         }
     }
 
+    public void searchIncome(String keyword) {
+        rows.removeAllElements();
+        
+        for (DataIncome a : data) {
+            if (a.getKeterangan().toLowerCase().contains(keyword.toLowerCase())) {
+                Object[] arow = new Object[4];
+                String tanggal = new SimpleDateFormat("yyyy-MM-dd").format(a.getTanggal());
+                arow[0] = tanggal;
+                arow[1] = a.getKeterangan();
+                arow[2] = a.getJumlah();
+                arow[3] = a.getId();
+                rows.add(arow);
+            }
+        }
+    }
+
     public int getThisMonthIncome(String month) {
         totalIncome = 0;
         for (DataIncome a : data) {

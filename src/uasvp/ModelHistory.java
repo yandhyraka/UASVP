@@ -60,6 +60,44 @@ public class ModelHistory extends AbstractTableModel {
         }
     }
 
+    public void searchHistory(String keyword) {
+        rows.removeAllElements();
+
+        for (DataIncome a : datai) {
+            if (a.getKeterangan().toLowerCase().contains(keyword.toLowerCase())) {
+                Object[] arow = new Object[4];
+                String tanggal = new SimpleDateFormat("yyyy-MM-dd").format(a.getTanggal());
+                arow[0] = tanggal;
+                arow[1] = a.getKeterangan();
+                arow[2] = a.getJumlah();
+                arow[3] = "Income";
+                rows.add(arow);
+            }
+        }
+        for (DataExpenditure a : datae) {
+            if (a.getKeterangan().toLowerCase().contains(keyword.toLowerCase())) {
+                Object[] arow = new Object[4];
+                String tanggal = new SimpleDateFormat("yyyy-MM-dd").format(a.getTanggal());
+                arow[0] = tanggal;
+                arow[1] = a.getKeterangan();
+                arow[2] = a.getJumlah();
+                arow[3] = "Expenditure";
+                rows.add(arow);
+            }
+        }
+        for (DataDebt a : datad) {
+            if (a.getUsername1().toLowerCase().contains(keyword.toLowerCase()) || a.getUsername2().toLowerCase().contains(keyword.toLowerCase())) {
+                Object[] arow = new Object[4];
+                String tanggal = new SimpleDateFormat("yyyy-MM-dd").format(a.getTanggal());
+                arow[0] = tanggal;
+                arow[1] = "From " + a.getUsername1() + " To " + a.getUsername2();
+                arow[2] = a.getJumlah();
+                arow[3] = "Debt";
+                rows.add(arow);
+            }
+        }
+    }
+
     public Object[] getRow(int row) {
         return rows.get(row);
     }
