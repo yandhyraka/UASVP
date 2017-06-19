@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -88,9 +89,13 @@ public class PanelEditListBudget extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(select)) {
-            ModelBudget mb = (ModelBudget) tabel.getModel();
-            Object[] temp = mb.getRow(tabel.convertRowIndexToModel(tabel.getSelectedRow()));
-            listener.selectBudget(temp);
+            if (tabel.getSelectedRow() == -1) {                
+                JOptionPane.showMessageDialog(null, "Please Select Item Before Continue");
+            } else {
+                ModelBudget mb = (ModelBudget) tabel.getModel();
+                Object[] temp = mb.getRow(tabel.convertRowIndexToModel(tabel.getSelectedRow()));
+                listener.selectBudget(temp);
+            }
         }
         if (e.getSource().equals(cancel)) {
             listener.cancelBudget(this);

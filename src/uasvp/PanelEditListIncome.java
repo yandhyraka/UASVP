@@ -15,6 +15,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -95,9 +96,13 @@ public class PanelEditListIncome extends JPanel implements ActionListener, KeyLi
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(select)) {
-            ModelIncome mi = (ModelIncome) tabel.getModel();
-            Object[] temp = mi.getRow(tabel.convertRowIndexToModel(tabel.getSelectedRow()));
-            listener.selectIncome(temp);
+            if (tabel.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(null, "Please Select Item Before Continue");
+            } else {
+                ModelIncome mi = (ModelIncome) tabel.getModel();
+                Object[] temp = mi.getRow(tabel.convertRowIndexToModel(tabel.getSelectedRow()));
+                listener.selectIncome(temp);
+            }
         }
         if (e.getSource().equals(cancel)) {
             listener.cancelIncome(this);

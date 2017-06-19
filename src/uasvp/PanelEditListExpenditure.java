@@ -15,6 +15,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -96,9 +97,13 @@ public class PanelEditListExpenditure extends JPanel implements ActionListener, 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(select)) {
-            ModelExpenditure me = (ModelExpenditure) tabel.getModel();
-            Object[] temp = me.getRow(tabel.convertRowIndexToModel(tabel.getSelectedRow()));
-            listener.selectExpenditure(temp);
+            if (tabel.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(null, "Please Select Item Before Continue");
+            } else {
+                ModelExpenditure me = (ModelExpenditure) tabel.getModel();
+                Object[] temp = me.getRow(tabel.convertRowIndexToModel(tabel.getSelectedRow()));
+                listener.selectExpenditure(temp);
+            }
         }
         if (e.getSource().equals(cancel)) {
             listener.cancelExpenditure(this);

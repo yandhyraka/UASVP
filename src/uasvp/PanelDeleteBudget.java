@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -42,7 +43,7 @@ public class PanelDeleteBudget extends JPanel implements ActionListener {
 
     public PanelDeleteBudget(DataUser currentUser, ModelBudget mb) {
         this.currentUser = currentUser;
-        this.mb=mb;
+        this.mb = mb;
         initComp();
         buildGui();
         registerListener();
@@ -88,10 +89,14 @@ public class PanelDeleteBudget extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(select)) {
-            ModelBudget mb = (ModelBudget) tabel.getModel();
-            Object[] temp = mb.getRow(tabel.convertRowIndexToModel(tabel.getSelectedRow()));
-            int id = Integer.parseInt(String.valueOf(temp[5]));
-            listener.deleteBudget(id);
+            if (tabel.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(null, "Please Select Item Before Continue");
+            } else {
+                ModelBudget mb = (ModelBudget) tabel.getModel();
+                Object[] temp = mb.getRow(tabel.convertRowIndexToModel(tabel.getSelectedRow()));
+                int id = Integer.parseInt(String.valueOf(temp[5]));
+                listener.deleteBudget(id);
+            }
         }
         if (e.getSource().equals(cancel)) {
             listener.cancelBudget(this);

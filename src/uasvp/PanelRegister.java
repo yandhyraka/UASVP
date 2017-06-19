@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -80,7 +81,7 @@ public class PanelRegister extends JPanel implements ActionListener {
                 du.setPassword(String.valueOf(password.getPassword()));
                 listener.registerSucceed(du);
             } else {
-                System.out.println("FAIL");
+                JOptionPane.showMessageDialog(null, "Username Has Taken");
             }
         }
     }
