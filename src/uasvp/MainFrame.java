@@ -59,7 +59,6 @@ public class MainFrame extends JFrame implements ActionListener, ListenerHome, L
         this.setSize(new Dimension(400, 300));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("ME Budget");
-//        this.setContentPane(new PanelHome());
         this.setJMenuBar(new JMenuBar());
         PanelHome ph = new PanelHome();
         this.setContentPane(ph);
