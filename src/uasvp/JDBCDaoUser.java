@@ -67,7 +67,7 @@ public class JDBCDaoUser {
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, user.getPassword());
-            pstmt.setString(3, user.getNama());
+            pstmt.setString(3, user.getUsername());
             berhasil = pstmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(JDBCDaoUser.class.getName()).log(Level.SEVERE, null, ex);

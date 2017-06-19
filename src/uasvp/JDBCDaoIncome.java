@@ -33,7 +33,7 @@ public class JDBCDaoIncome {
         ResultSet rs = null;
         try {
             pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, user.getNama());
+            pstmt.setString(1, user.getUsername());
             rs = pstmt.executeQuery();
             result = new Vector<DataIncome>();
             while (rs.next()) {
@@ -69,7 +69,7 @@ public class JDBCDaoIncome {
             pstmt.setInt(1, income.getJumlah());
             pstmt.setString(2, income.getKeterangan());
             pstmt.setDate(3, new java.sql.Date(income.getTanggal().getTime()));
-            pstmt.setString(4, user.getNama());
+            pstmt.setString(4, user.getUsername());
             berhasil = pstmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(JDBCDaoUser.class.getName()).log(Level.SEVERE, null, ex);

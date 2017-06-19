@@ -32,7 +32,7 @@ public class JDBCDaoExpenditure {
         ResultSet rs = null;
         try {
             pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, user.getNama());
+            pstmt.setString(1, user.getUsername());
             rs = pstmt.executeQuery();
             result = new Vector<DataExpenditure>();
             while (rs.next()) {
@@ -68,7 +68,7 @@ public class JDBCDaoExpenditure {
             pstmt.setInt(1, expend.getJumlah());
             pstmt.setString(2, expend.getKeterangan());
             pstmt.setDate(3, new java.sql.Date(expend.getTanggal().getTime()));
-            pstmt.setString(4, user.getNama());
+            pstmt.setString(4, user.getUsername());
             pstmt.setInt(5, expend.getIdKategori());
             berhasil = pstmt.executeUpdate();
         } catch (SQLException ex) {

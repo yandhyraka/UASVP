@@ -32,7 +32,7 @@ public class JDBCDaoBudget {
         ResultSet rs = null;
         try {
             pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, user.getNama());
+            pstmt.setString(1, user.getUsername());
             rs = pstmt.executeQuery();
             result = new Vector<DataBudget>();
             while (rs.next()) {
@@ -69,7 +69,7 @@ public class JDBCDaoBudget {
             pstmt.setInt(1, budget.getJumlah());
             pstmt.setInt(2, budget.getSisa());
             pstmt.setString(3, budget.getBulan());
-            pstmt.setString(4, user.getNama());
+            pstmt.setString(4, user.getUsername());
             pstmt.setInt(5, budget.getIdKategori());
             berhasil = pstmt.executeUpdate();
         } catch (SQLException ex) {
